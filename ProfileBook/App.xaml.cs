@@ -1,28 +1,32 @@
-﻿using System;
+﻿using Prism;
+using Prism.Unity;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Prism.Ioc;
 
 namespace ProfileBook
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+           
         }
-
-        protected override void OnStart()
+        public App(IPlatformInitializer initializer = null) : base(initializer)
         {
+
         }
-
-        protected override void OnSleep()
-        {
+       protected override async void OnInitialized()
+        { 
+        
         }
+        
 
-        protected override void OnResume()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+           
         }
     }
 }
