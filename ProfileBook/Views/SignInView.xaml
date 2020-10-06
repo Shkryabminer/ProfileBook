@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProfileBook.Views.SignInView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="UsersSignIN">
+
+    <StackLayout
+        Padding="20"
+        BackgroundColor="White"
+        HorizontalOptions="FillAndExpand">
+        <StackLayout
+            Margin="0,200,0,0"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Vertical"
+            Spacing="5">
+            <Entry
+                FontSize="18"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Start"
+                Placeholder="Login"
+                TextColor="Blue" />
+            <Entry IsPassword="True" Placeholder="Password" />
+        </StackLayout>
+
+        <StackLayout
+            Margin="0,200,0,0"
+            HorizontalOptions="Center"
+            Orientation="Vertical">
+
+            <Button
+                x:Name="btnSignIn"
+                BackgroundColor="Orange"
+                HorizontalOptions="CenterAndExpand"
+                Text="SIGN IN"
+                TextColor="AliceBlue"
+                WidthRequest="100" />
+
+            <Label
+                x:Name="lblSignUp"
+                Padding="0,10,0,0"
+                FontSize="20"
+                HorizontalOptions="CenterAndExpand"
+                HorizontalTextAlignment="Center"
+                Text="SignUp"
+                TextColor="Blue">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToSignUpViewCommand}"
+                                          CommandParameter="lblSignUp"/>
+                    </Label.GestureRecognizers>
+            </Label>
+
+        </StackLayout>
+    </StackLayout>
+
+
+</ContentPage>

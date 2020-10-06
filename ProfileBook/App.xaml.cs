@@ -4,6 +4,8 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Ioc;
+using ProfileBook.ViewModels;
+using ProfileBook.Views;
 
 namespace ProfileBook
 {
@@ -19,14 +21,16 @@ namespace ProfileBook
 
         }
        protected override async void OnInitialized()
-        { 
-        
+        {
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
         }
         
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-           
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
+            containerRegistry.RegisterForNavigation<SignUpView, SignUpViewViewModel>();
         }
     }
 }
