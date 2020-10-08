@@ -6,6 +6,7 @@ using ProfileBook.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
 using ProfileBook.Models;
+using ProfileBook.Views;
 
 namespace ProfileBook.ViewModels
 {
@@ -42,7 +43,7 @@ namespace ProfileBook.ViewModels
         public async void AddUser()
         {
             UsersRepository.SaveUser(new User(Login, Password));
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}");
+            await NavigationService.NavigateAsync($"/{nameof(SignInView)}");
         }
 
 

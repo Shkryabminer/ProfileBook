@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace ProfileBook.ViewModels
 {
@@ -21,7 +22,8 @@ namespace ProfileBook.ViewModels
             set { SetProperty(ref _profile, value); }
             get { return _profile; }
         }
-        ICommand _saveProfileCommand;
+       ICommand _saveProfileCommand;
+        public ICommand SaveProfileCommand => _saveProfileCommand ?? (_saveProfileCommand = new Command(SaveProfile));
 
         #endregion
         public IProfileRepository ProfilesRepository { get; private set; }
@@ -36,8 +38,8 @@ namespace ProfileBook.ViewModels
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
             _Profile = parameters.GetValue<IProfile>("Profile") as Profile;
+            base.OnNavigatedTo(parameters);
         }
          void SaveProfile()
         {

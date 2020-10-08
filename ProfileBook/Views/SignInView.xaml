@@ -16,12 +16,13 @@
             Orientation="Vertical"
             Spacing="5">
             <Entry
+                Text="{Binding Login}"
                 FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
                 Placeholder="Login"
                 TextColor="Blue" />
-            <Entry IsPassword="True" Placeholder="Password" />
+            <Entry IsPassword="True" Placeholder="Password" Text="{Binding Password}"/>
         </StackLayout>
 
         <StackLayout
@@ -32,6 +33,7 @@
             <Button
                 x:Name="btnSignIn"
                 BackgroundColor="Orange"
+                Command="{Binding ToMainListViewCommand}"
                 HorizontalOptions="CenterAndExpand"
                 Text="SIGN IN"
                 TextColor="AliceBlue"

@@ -5,6 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SaveProfileCommand}" Text="Save" />
+    </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout
             Padding="20"
@@ -15,7 +18,9 @@
                 HorizontalOptions="FillAndExpand"
                 Orientation="Vertical"
                 Spacing="5">
-                <Image HeightRequest="150" WidthRequest="150" />
+                <Frame BorderColor="Brown">
+                    <Image HeightRequest="150" WidthRequest="150" />
+                </Frame>
                 <Label
                     Margin="5,0,0,0"
                     FontSize="12"

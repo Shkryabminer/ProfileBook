@@ -33,7 +33,7 @@ namespace ProfileBook.ViewModels
         private ICommand _toSignUpViewCommand;
         public ICommand ToSignUpViewCommand => _toSignUpViewCommand ?? (_toSignUpViewCommand = new Command(ToSignUpPage));
         private ICommand _toMainListViewCommand;
-        public ICommand ToMainListView => _toMainListViewCommand ?? (_toMainListViewCommand = new Command(SwapToMainView));
+        public ICommand ToMainListViewCommand => _toMainListViewCommand ?? (_toMainListViewCommand = new Command(SwapToMainView));
         public IAuthentificationService _AuthentificationService { get; private set; }
         #endregion
         public SignInViewViewModel(INavigationService navigationServcie, IAuthentificationService authentificationService) : base(navigationServcie)
@@ -47,9 +47,12 @@ namespace ProfileBook.ViewModels
         public async void SwapToMainView()
         {
             IUser authUser= _AuthentificationService.GetAuthUser(Login, Password);
-            var navParams = new NavigationParameters();
-            navParams.Add("User", authUser);
-            await NavigationService.NavigateAsync($"{nameof(MainListView)}", navParams) ;
+            if (authUser!=null)
+            {
+                var navParams = new NavigationParameters();
+                navParams.Add("User", authUser);
+                await NavigationService.NavigateAsync($"{nameof(MainListView)}", navParams);
+            }
         }
     }
 }

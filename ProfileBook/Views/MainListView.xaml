@@ -3,38 +3,26 @@
     x:Class="ProfileBook.Views.MainListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    xmlns:prism="http://prismlibrary.com">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AddNewProfileCommand}" Text="Add" />
+    </ContentPage.ToolbarItems>
     <StackLayout Orientation="Vertical">
-        <!--  Place new controls here  -->
-        <StackLayout>
-            <Button
-                BackgroundColor="White"
-                Command="{Binding NavigateToContactPageCommand}"
-                Text="Add Contact"
-                TextColor="Blue" />
-        </StackLayout>
-
         <ListView
-            x:Name="contactListView"
-            HasUnevenRows="True"
-            ItemsSource="{Binding Path=Contacts}"
-            SelectedItem="{Binding SelectedContact}">
+            x:Name="profilesListView"
+           
+            ItemsSource="{Binding Path=Profiles}"
+            SelectedItem="{Binding SelectedProfile}">
             <ListView.Behaviors />
             <ListView.ItemTemplate>
                 <DataTemplate>
-
-
                     <ViewCell>
-
-
                         <ViewCell.View>
-
                             <StackLayout Orientation="Horizontal">
                                 <Image HeightRequest="40" WidthRequest="100" />
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="{Binding Path=Name}" />
-                                    <Label Text="{Binding Path=Surname}" />
+                                    <Label Text="{Binding Path=FirstName}" TextColor="Black"/>
+                                    <Label Text="{Binding Path=SecondName}" TextColor="Black" />
 
                                 </StackLayout>
 
@@ -45,4 +33,5 @@
             </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
+
 </ContentPage>

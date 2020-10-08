@@ -33,10 +33,11 @@ namespace ProfileBook
             try
             {
                 containerRegistry.RegisterForNavigation<NavigationPage>();
-                containerRegistry.Register<IUser, User>();
-                containerRegistry.Register<IProfile, Profile>();
-                containerRegistry.Register<IProfileRepository, ProfileRepository>();
-                containerRegistry.Register<IUserRepository, UserRepository>();
+             containerRegistry.Register<IUser, User>();
+              containerRegistry.Register<IProfile, Profile>();
+              containerRegistry.Register<IProfileRepository, ProfileRepository>();
+              containerRegistry.Register<IUserRepository, UserRepository>();
+                containerRegistry.Register<IAuthentificationService, AutentificationService>();
                 containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
                 containerRegistry.RegisterForNavigation<SignUpView, SignUpViewViewModel>();
                 containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();

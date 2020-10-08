@@ -51,8 +51,8 @@ namespace ProfileBook.Services
         }
 
         public int SaveUser(IUser user)
-        {
-            throw new NotImplementedException();
+        {          
+          return  dataBase.Insert(user);
         }
     }
 }
