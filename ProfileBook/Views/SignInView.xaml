@@ -46,9 +46,8 @@
                 Text="SignUp"
                 TextColor="Blue">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ToSignUpViewCommand}"
-                                          CommandParameter="lblSignUp"/>
-                    </Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ToSignUpViewCommand}" CommandParameter="lblSignUp" />
+                </Label.GestureRecognizers>
             </Label>
 
         </StackLayout>

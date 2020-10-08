@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProfileBook.Views.AddEditProfileBook"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <ScrollView>
+        <StackLayout
+            Padding="20"
+            BackgroundColor="White"
+            HorizontalOptions="FillAndExpand">
+            <StackLayout
+                Margin="0,20,0,0"
+                HorizontalOptions="FillAndExpand"
+                Orientation="Vertical"
+                Spacing="5">
+                <Image HeightRequest="150" WidthRequest="150" />
+                <Label
+                    Margin="5,0,0,0"
+                    FontSize="12"
+                    Text="NickName" />
+                <Entry
+                    Margin="0,3,0,0"
+                    FontSize="18"
+                    HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Start"
+                    Placeholder="NickName"
+                    Text="{Binding _Profile.FirstName}"
+                    TextColor="Blue" />
+                <Label
+                    Margin="5,20,0,0"
+                    FontSize="12"
+                    Text="Name" />
+                <Entry
+                    x:Name="entrySecond"
+                    Placeholder="Name"
+                    Text="{Binding _Profile.SecondName}" />
+            </StackLayout>
+
+            <StackLayout
+                Margin="0,150,0,0"
+                HorizontalOptions="Fill"
+                Orientation="Vertical">
+                <Label Text="Description" />
+                <Editor MaxLength="120" Text="{Binding _Profile.Description}" />
+            </StackLayout>
+        </StackLayout>
+
+    </ScrollView>
+
+</ContentPage>

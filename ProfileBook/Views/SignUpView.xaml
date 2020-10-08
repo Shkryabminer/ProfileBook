@@ -8,5 +8,43 @@
     xmlns:prism="http://prismlibrary.com"
     Title="SignUpView"
     mc:Ignorable="d">
-    <Label Text="SUW"/>
+    <StackLayout
+        Padding="20"
+        BackgroundColor="White"
+        HorizontalOptions="FillAndExpand">
+        <StackLayout
+            Margin="0,200,0,0"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Vertical"
+            Spacing="5">
+            <Entry
+                FontSize="18"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Start"
+                Placeholder="Login"
+                TextColor="Blue" />
+            <Entry
+                x:Name="entryPasswoed"
+                IsPassword="True"
+                Placeholder="Password" />
+            <Entry
+                x:Name="entryConfirmPas"
+                IsPassword="True"
+                Placeholder="ConfirmPassword" />
+
+        </StackLayout>
+
+        <StackLayout
+            Margin="0,200,0,0"
+            HorizontalOptions="Fill"
+            Orientation="Vertical">
+            <Button
+                x:Name="btnSignIn"
+                BackgroundColor="Orange"
+                HorizontalOptions="Fill"
+                Text="Registration"
+                TextColor="AliceBlue" />
+        </StackLayout>
+    </StackLayout>
+
 </ContentPage>

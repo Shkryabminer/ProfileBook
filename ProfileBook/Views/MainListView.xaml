@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProfileBook.Views.MainListView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <StackLayout Orientation="Vertical">
+        <!--  Place new controls here  -->
+        <StackLayout>
+            <Button
+                BackgroundColor="White"
+                Command="{Binding NavigateToContactPageCommand}"
+                Text="Add Contact"
+                TextColor="Blue" />
+        </StackLayout>
+
+        <ListView
+            x:Name="contactListView"
+            HasUnevenRows="True"
+            ItemsSource="{Binding Path=Contacts}"
+            SelectedItem="{Binding SelectedContact}">
+            <ListView.Behaviors />
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+
+                    <ViewCell>
+
+
+                        <ViewCell.View>
+
+                            <StackLayout Orientation="Horizontal">
+                                <Image HeightRequest="40" WidthRequest="100" />
+                                <StackLayout Orientation="Vertical">
+                                    <Label Text="{Binding Path=Name}" />
+                                    <Label Text="{Binding Path=Surname}" />
+
+                                </StackLayout>
+
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

@@ -6,6 +6,8 @@ using Xamarin.Forms.Xaml;
 using Prism.Ioc;
 using ProfileBook.ViewModels;
 using ProfileBook.Views;
+using ProfileBook.Models;
+using ProfileBook.Services;
 
 namespace ProfileBook
 {
@@ -28,9 +30,23 @@ namespace ProfileBook
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
-            containerRegistry.RegisterForNavigation<SignUpView, SignUpViewViewModel>();
+            try
+            {
+                containerRegistry.RegisterForNavigation<NavigationPage>();
+                containerRegistry.Register<IUser, User>();
+                containerRegistry.Register<IProfile, Profile>();
+                containerRegistry.Register<IProfileRepository, ProfileRepository>();
+                containerRegistry.Register<IUserRepository, UserRepository>();
+                containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
+                containerRegistry.RegisterForNavigation<SignUpView, SignUpViewViewModel>();
+                containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
+                containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                
+            }
         }
     }
 }
