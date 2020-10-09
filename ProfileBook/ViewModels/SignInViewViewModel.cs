@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using ProfileBook.Views;
 using ProfileBook.Services;
 using ProfileBook.Models;
+using Acr.UserDialogs;
 
 namespace ProfileBook.ViewModels
 {
@@ -47,11 +48,15 @@ namespace ProfileBook.ViewModels
         public async void SwapToMainView()
         {
             IUser authUser= _AuthentificationService.GetAuthUser(Login, Password);
-            if (authUser!=null)
+            if (authUser != null)
             {
                 var navParams = new NavigationParameters();
                 navParams.Add("User", authUser);
                 await NavigationService.NavigateAsync($"{nameof(MainListView)}", navParams);
+            }
+            else
+            {
+                UserDialogs.Instance.Alert("Неверный пользователь или пароль","Ok");
             }
         }
     }

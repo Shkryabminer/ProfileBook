@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Prism;
 using Prism.Ioc;
+using Acr.UserDialogs;
 
 namespace ProfileBook.Droid
 {
@@ -18,6 +19,10 @@ namespace ProfileBook.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+            //if (UserDialogs.Instance == null)
+            //{
+                UserDialogs.Init(this);
+            //}
 
             base.OnCreate(savedInstanceState);
 

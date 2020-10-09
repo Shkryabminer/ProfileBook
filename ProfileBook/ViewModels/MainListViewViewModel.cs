@@ -23,22 +23,14 @@ namespace ProfileBook.ViewModels
             get { return _profiles; }
             set { SetProperty(ref _profiles, value); }
         }
-        ICommand _selectProfileCommand;
-        public ICommand SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new Command(SelectProfile));
-
-
-
-        ICommand _addNewProfileCommand;
-        public ICommand AddNewProfileCommand => _addNewProfileCommand ?? (_addNewProfileCommand = new Command(AddNewProfile));
+       
 
         private Profile _profile;
 
         public Profile SelectedProfile
         {
             get
-            {
-               // if (_profile == null)
-              //     _profile = new Profile(authUser.UserID);
+            {              
                 return _profile;
             }
             set
@@ -50,12 +42,16 @@ namespace ProfileBook.ViewModels
             }
         }
         #endregion
+        #region Commands
+        ICommand _selectProfileCommand;
+        public ICommand SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new Command(SelectProfile));
+
+        ICommand _addNewProfileCommand;
+        public ICommand AddNewProfileCommand => _addNewProfileCommand ?? (_addNewProfileCommand = new Command(AddNewProfile));
+        #endregion
         public MainListViewViewModel(INavigationService navigationService, IProfileRepository profilesRepository) : base(navigationService)
         {
-            ProfilesRepository = profilesRepository;
-            //Profiles = new List<Profile>();
-            //Profiles.Add(new Profile { FirstName = "fn", SecondName = "sn" });
-           // Profiles.Add(new Profile { FirstName = "fn2", SecondName = "sn2" });
+            ProfilesRepository = profilesRepository;            
         }       
        
         public  void AddNewProfile(object obj)
@@ -78,20 +74,9 @@ namespace ProfileBook.ViewModels
             base.OnNavigatedTo(parameters);
             if (authUser == null)//проверяется был ли установлен активный пользователь ранее
                 authUser = parameters.GetValue<User>("User") as User;
-
             Profiles = ProfilesRepository.GetUserContacts(authUser.UserID).ToList();
-
         }
-        public override void Initialize(INavigationParameters parameters)
-        {
-            //if (authUser == null)
-            //    authUser = parameters.GetValue<User>("User") as User;
-
-            //Profiles = ProfilesRepository.GetUserContacts(authUser.UserID).ToList();
-            
-          //  base.Initialize(parameters);
-        }
-
+       
         private async void SwapToProfilePage(IProfile profile)
         {
             var navParam = new NavigationParameters();            

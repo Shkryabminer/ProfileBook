@@ -16,13 +16,16 @@
             Orientation="Vertical"
             Spacing="5">
             <Entry
-                Text="{Binding Login}"
                 FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
                 Placeholder="Login"
+                Text="{Binding Login}"
                 TextColor="Blue" />
-            <Entry IsPassword="True" Placeholder="Password" Text="{Binding Password}"/>
+            <Entry
+                IsPassword="True"
+                Placeholder="Password"
+                Text="{Binding Password}" />
         </StackLayout>
 
         <StackLayout

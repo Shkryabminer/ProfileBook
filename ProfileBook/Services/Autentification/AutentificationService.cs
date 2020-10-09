@@ -29,7 +29,6 @@ namespace ProfileBook.Services
                         where u.Login == login && u.Password == password
                         select u;
                 user = c.First<User>();
-
             }
             return user;
         }

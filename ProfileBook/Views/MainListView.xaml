@@ -10,7 +10,6 @@
     <StackLayout Orientation="Vertical">
         <ListView
             x:Name="profilesListView"
-           
             ItemsSource="{Binding Path=Profiles}"
             SelectedItem="{Binding SelectedProfile}">
             <ListView.Behaviors />
@@ -21,7 +20,7 @@
                             <StackLayout Orientation="Horizontal">
                                 <Image HeightRequest="40" WidthRequest="100" />
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="{Binding Path=FirstName}" TextColor="Black"/>
+                                    <Label Text="{Binding Path=FirstName}" TextColor="Black" />
                                     <Label Text="{Binding Path=SecondName}" TextColor="Black" />
 
                                 </StackLayout>
