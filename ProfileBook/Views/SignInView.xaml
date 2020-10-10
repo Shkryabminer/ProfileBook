@@ -38,6 +38,7 @@
                 BackgroundColor="Orange"
                 Command="{Binding ToMainListViewCommand}"
                 HorizontalOptions="CenterAndExpand"
+                IsEnabled="{Binding SignInIsActiv}"
                 Text="SIGN IN"
                 TextColor="AliceBlue"
                 WidthRequest="100" />

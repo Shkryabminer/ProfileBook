@@ -18,17 +18,43 @@ namespace ProfileBook.ViewModels
     {
         #region Props
         string _login;
+        bool _signInIsActive;
+      //  public event PropertyChangingEventHandler PropertyChanged;
+        public bool SignInIsActiv
+        {
+            get { return !(Login == "" || Password == ""); }
+            set
+            {
+                SetProperty(ref _signInIsActive, value);
+               
+            }
+        }
+       //protected override void OnPropertyChanged(string prop="")
+       // {
+       //     PropertyChanged(this, new PropertyChangingEventArgs(prop));
+       // }
         public string Login
         {
-            get { return _login; }
-            set { SetProperty(ref _login, value); }
+            get {
+                if (_login == null)
+                    _login = ""; 
+                return  _login; }
+            set { SetProperty(ref _login, value);
+                RaisePropertyChanged("SignInIsActiv");
+            }
         }
 
         string _password;
         public string Password
         {
-            get { return _password; }
-            set { SetProperty(ref _password, value); }
+            get
+            {
+                if (_password == null)
+                    _password = "";
+                return _password; }
+            set { SetProperty(ref _password, value);
+                RaisePropertyChanged("SignInIsActiv");
+            }
         }
 
         private ICommand _toSignUpViewCommand;
@@ -47,6 +73,7 @@ namespace ProfileBook.ViewModels
         }
         public async void SwapToMainView()
         {
+            
             IUser authUser= _AuthentificationService.GetAuthUser(Login, Password);
             if (authUser != null)
             {
@@ -56,7 +83,13 @@ namespace ProfileBook.ViewModels
             }
             else
             {
-                UserDialogs.Instance.Alert("Неверный пользователь или пароль","Ok");
+                //ActionSheetConfig config = new ActionSheetConfig();
+                //config.Add("Неверный пользователь или пароль", () => Password = "", null);
+                //UserDialogs.Instance.ActionSheet(config);
+               
+              UserDialogs.Instance.Alert("Неверный пользователь или пароль");
+                Password = "";
+
             }
         }
     }
