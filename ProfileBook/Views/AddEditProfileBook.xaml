@@ -6,7 +6,10 @@
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding SaveProfileCommand}" Text="Save" />
+        <ToolbarItem
+            Command="{Binding SaveProfileCommand}"
+            IconImageSource="ic_save.png"
+            IsEnabled="{Binding SaveIsActive}" />
     </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout
@@ -43,13 +46,23 @@
                     Text="{Binding _Profile.SecondName}" />
             </StackLayout>
 
-            <StackLayout
-                Margin="0,150,0,0"
-                HorizontalOptions="Fill"
-                Orientation="Vertical">
-                <Label Text="Description" />
-                <Editor MaxLength="120" Text="{Binding _Profile.Description}" />
-            </StackLayout>
+            <Grid
+                Margin="5,20,0,0"
+                BackgroundColor="Gray"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Label
+                    HorizontalOptions="Start"
+                    Text="Description"
+                    VerticalOptions="Start" />
+                <Editor
+                    Margin="0,40,0,0"
+                    HorizontalOptions="FillAndExpand"
+                    MaxLength="120"
+                    Text="{Binding _Profile.Description}"
+                    VerticalOptions="FillAndExpand" />
+
+            </Grid>
         </StackLayout>
 
     </ScrollView>

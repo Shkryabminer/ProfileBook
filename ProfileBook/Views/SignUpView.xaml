@@ -33,7 +33,7 @@
                 x:Name="entryConfirmPas"
                 IsPassword="True"
                 Placeholder="ConfirmPassword"
-                Text="{Binding ConfirmPassword}" />
+                Text="{Binding Confirm}" />
 
         </StackLayout>
 
@@ -46,6 +46,7 @@
                 BackgroundColor="Orange"
                 Command="{Binding CreateUser}"
                 HorizontalOptions="Fill"
+                IsEnabled="{Binding SignUpIsActiv}"
                 Text="Registration"
                 TextColor="AliceBlue" />
         </StackLayout>

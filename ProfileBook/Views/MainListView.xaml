@@ -3,34 +3,80 @@
     x:Class="ProfileBook.Views.MainListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com">
+    xmlns:prism="http://prismlibrary.com"
+    Title="MainList">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding AddNewProfileCommand}" Text="Add" />
+        <ToolbarItem Icon="ic_settings.png" />
+        <ToolbarItem Command="{Binding LogOutCommand}" Icon="ic_exit_to_app.png" />
     </ContentPage.ToolbarItems>
-    <StackLayout Orientation="Vertical">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Double x:Key="ButtonSize">100</x:Double>
+            <x:Int32 x:Key="CornerRadius">50</x:Int32>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
         <ListView
             x:Name="profilesListView"
+            HasUnevenRows="True"
             ItemsSource="{Binding Path=Profiles}"
-            SelectedItem="{Binding SelectedProfile}">
+            SelectedItem="{Binding SelectedProfile}"
+            SelectionMode="None">
             <ListView.Behaviors />
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Command="{Binding BindingContext.SelectProfileCommand, Source={x:Reference  profilesListView}}"
+                                CommandParameter="{Binding .}"
+                                Text="EDIT" />
+                            <MenuItem
+                                Command="{Binding BindingContext.DeleteProfileCommand, Source={x:Reference profilesListView}}" 
+                                CommandParameter="{Binding .}"
+                                Text="DELETE" />
+                        </ViewCell.ContextActions>
                         <ViewCell.View>
                             <StackLayout Orientation="Horizontal">
-                                <Image HeightRequest="40" WidthRequest="100" />
+                                <Image
+                                    HeightRequest="40"
+                                    Source="{Binding Picture}"
+                                    WidthRequest="100" />
                                 <StackLayout Orientation="Vertical">
-                                    <Label Text="{Binding Path=FirstName}" TextColor="Black" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        Text="{Binding Path=FirstName}"
+                                        TextColor="Black" />
                                     <Label Text="{Binding Path=SecondName}" TextColor="Black" />
-
                                 </StackLayout>
-
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
+        <Label
+            FontSize="40"
+            HorizontalOptions="Center"
+            IsVisible="{Binding LabelIsVisible}"
+            Text="No profiles added"
+            VerticalOptions="Center" />
+        <Button
+            Margin="40"
+            BackgroundColor="Blue"
+            BorderColor="Black"
+            BorderWidth="5"
+            Command="{Binding AddNewProfileCommand}"
+            CornerRadius="{StaticResource Key=CornerRadius}"
+            Font="60"
+            FontAttributes="Bold"
+            HeightRequest="{StaticResource Key=ButtonSize}"
+            HorizontalOptions="End"
+            Text="+"
+            TextColor="White"
+            VerticalOptions="End"
+            WidthRequest="{StaticResource Key=ButtonSize}" />
+
+    </Grid>
 
 </ContentPage>

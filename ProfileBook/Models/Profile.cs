@@ -11,7 +11,7 @@ namespace ProfileBook.Models
         public int Id { get ; set ; }
         public String FirstName { get ; set ; }
         public String SecondName { get ; set ; }
-        public string Picture { get ; set ; }
+        public string Picture { get; set; }
         public int UserID { get; set ; }
         public string Description { get; set; }
         public Profile()
@@ -20,6 +20,7 @@ namespace ProfileBook.Models
             SecondName = "";
             Picture = "";
             Description = "";
+            Picture = "pic_profile.png";
         }
         public Profile(int userId):this()
         {

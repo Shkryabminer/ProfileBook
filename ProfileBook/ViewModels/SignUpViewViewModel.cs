@@ -7,6 +7,8 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using ProfileBook.Models;
 using ProfileBook.Views;
+using ProfileBook.Services.Validators;
+using Acr.UserDialogs;
 
 namespace ProfileBook.ViewModels
 {
@@ -14,36 +16,62 @@ namespace ProfileBook.ViewModels
     {
         #region Properties
         string _login;
+        bool _signInUpActive;
+        
+        public bool SignUpIsActiv
+        {
+            get { return !(Login == "" || Password == ""|| Confirm =="" ||Login==null||Password==null||Confirm==null); }
+            set
+            {
+                SetProperty(ref _signInUpActive, value);
+            }
+        }
         public string Login
         {
             get { return _login; }
-            set { SetProperty(ref _login, value); }
+            set { SetProperty(ref _login, value);
+                RaisePropertyChanged("SignUpIsActiv");
+            }
         }
         string _password;
         public string Password
         {
             get { return _password; }
-            set { SetProperty(ref _password, value); }
+            set { SetProperty(ref _password, value);
+                RaisePropertyChanged("SignUpIsActiv");
+            }
         }
-        string _confirmPassword;
-        public string ConfirmPassword
+        string _confirm;
+        public string Confirm
         {
-            get { return _confirmPassword; }
-            set { SetProperty(ref _confirmPassword, value); }
+            get { return _confirm; }
+            set { SetProperty(ref _confirm, value);
+                RaisePropertyChanged("SignUpIsActiv");
+                }
         }
         ICommand _createUser;
         public ICommand CreateUser => _createUser ?? (_createUser = new Command(AddUser));
         #endregion
 
         public IUserRepository UsersRepository { get; private set; }
-        public SignUpViewViewModel(INavigationService navigationService, IUserRepository usersRepository) : base(navigationService)
+        public IPasswordValidator SignUpValidator { get; private set; }
+        public SignUpViewViewModel(INavigationService navigationService, IUserRepository usersRepository, IPasswordValidator signUpValidator) : base(navigationService)
         {
             UsersRepository = usersRepository;
+            SignUpValidator = signUpValidator;
         }
         public async void AddUser()
         {
-            UsersRepository.SaveUser(new User(Login, Password));
-            await NavigationService.NavigateAsync($"/{nameof(SignInView)}");
+            string message = SignUpValidator.IsValid(Login, Password, Confirm, UsersRepository.GetUsers());
+           
+            if (message == "Valid")
+            {
+                var navParam = new NavigationParameters();
+                navParam.Add("Login", Login);
+                UsersRepository.SaveUser(new User(Login, Password));
+                await NavigationService.NavigateAsync($"/{nameof(SignInView)}",navParam);
+            }
+            else UserDialogs.Instance.Alert(message, "Ok");
         }
 
 

@@ -92,5 +92,15 @@ namespace ProfileBook.ViewModels
 
             }
         }
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            string recivedLogin;
+            parameters.TryGetValue<string>("Login", out recivedLogin);
+            if (recivedLogin == null)
+                recivedLogin = "";
+            Login = recivedLogin;
+            Password = "";
+        }
     }
 }

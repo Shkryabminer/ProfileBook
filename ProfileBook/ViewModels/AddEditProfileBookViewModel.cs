@@ -16,10 +16,17 @@ namespace ProfileBook.ViewModels
         #region Props
 
         IProfile _profile;
-
+        bool _saveIsActive;
+        public bool SaveIsActive
+        {
+            get { return !(_Profile.FirstName == "" || _Profile.FirstName == null || _Profile.SecondName == "" || _Profile.SecondName == null); }
+            set { SetProperty(ref _saveIsActive, value); }
+        }
         public IProfile _Profile
         {
-            set { SetProperty(ref _profile, value); }
+            set { SetProperty(ref _profile, value);
+                RaisePropertyChanged("SaveIsActive");
+            }
             get { return _profile; }
         }
        ICommand _saveProfileCommand;
