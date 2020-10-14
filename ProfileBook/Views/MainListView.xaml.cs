@@ -15,5 +15,10 @@ namespace ProfileBook.Views
                 System.Console.WriteLine(e.Message);
             }
         }
+
+        private void profilesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
+        }
     }
 }

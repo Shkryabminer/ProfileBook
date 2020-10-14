@@ -3,10 +3,10 @@
     x:Class="ProfileBook.Views.AddEditProfileBook"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    xmlns:prism="http://prismlibrary.com">
     <ContentPage.ToolbarItems>
         <ToolbarItem
+            x:Name="SaveButton"
             Command="{Binding SaveProfileCommand}"
             IconImageSource="ic_save.png"
             IsEnabled="{Binding SaveIsActive}" />
@@ -22,7 +22,14 @@
                 Orientation="Vertical"
                 Spacing="5">
                 <Frame BorderColor="Brown">
-                    <Image HeightRequest="150" WidthRequest="150" />
+                    <Image
+                        HeightRequest="150"
+                        Source="{Binding CurrentProfile.Picture, Mode=TwoWay}"
+                        WidthRequest="150">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ImageTapCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
                 </Frame>
                 <Label
                     Margin="5,0,0,0"
@@ -34,7 +41,7 @@
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Start"
                     Placeholder="NickName"
-                    Text="{Binding _Profile.FirstName}"
+                    Text="{Binding CurrentProfile.FirstName}"
                     TextColor="Blue" />
                 <Label
                     Margin="5,20,0,0"
@@ -43,7 +50,7 @@
                 <Entry
                     x:Name="entrySecond"
                     Placeholder="Name"
-                    Text="{Binding _Profile.SecondName}" />
+                    Text="{Binding CurrentProfile.SecondName}" />
             </StackLayout>
 
             <Grid
@@ -59,7 +66,7 @@
                     Margin="0,40,0,0"
                     HorizontalOptions="FillAndExpand"
                     MaxLength="120"
-                    Text="{Binding _Profile.Description}"
+                    Text="{Binding CurrentProfile.Description}"
                     VerticalOptions="FillAndExpand" />
 
             </Grid>

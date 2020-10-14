@@ -9,22 +9,24 @@ using Android.OS;
 using Prism;
 using Prism.Ioc;
 using Acr.UserDialogs;
+using Plugin.Media;
+
 
 namespace ProfileBook.Droid
 {
     [Activity(Label = "ProfileBook", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            //if (UserDialogs.Instance == null)
-            //{
+           
                 UserDialogs.Init(this);
-            //}
+            
 
             base.OnCreate(savedInstanceState);
+            await CrossMedia.Current.Initialize();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

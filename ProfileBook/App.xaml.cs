@@ -9,11 +9,13 @@ using ProfileBook.Views;
 using ProfileBook.Models;
 using ProfileBook.Services;
 using ProfileBook.Services.Validators;
+using ProfileBook.Services.Autorization;
 
 namespace ProfileBook
 {
     public partial class App : PrismApplication
     {
+       IAutorization Autorizator { get; set; }
         public App()
         {
             InitializeComponent();
@@ -21,11 +23,15 @@ namespace ProfileBook
         }
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
-
+           // Autorizator = new AutorizationService();
         }
         protected override async void OnInitialized()
         {
-            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
+            Autorizator = new AutorizationService();
+            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
+            if ((Autorizator.Autorizeted()))
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+            else { await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}"); }
         }
 
 
@@ -33,16 +39,20 @@ namespace ProfileBook
         {
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.Register<IUser, User>();
-            containerRegistry.Register<IProfile, Profile>();
-            containerRegistry.Register<IProfileRepository, ProfileRepository>();
-            containerRegistry.Register<IUserRepository, UserRepository>();
-            containerRegistry.Register<IAuthentificationService, AutentificationService>();
-            containerRegistry.Register<IPasswordValidator, PasswordValidator>();
             containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
             containerRegistry.RegisterForNavigation<SignUpView, SignUpViewViewModel>();
             containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
+
+            containerRegistry.Register<IUser, User>();
+            containerRegistry.Register<IProfile, Profile>();
+
+            containerRegistry.Register<IAutorization,AutorizationService>();
+            containerRegistry.Register<IProfileRepository, ProfileRepository>();            
+            containerRegistry.Register<IUserRepository, UserRepository>();
+            containerRegistry.Register<IAuthentificationService, AutentificationService>();
+            containerRegistry.Register<IPasswordValidator, PasswordValidator>();
+            
 
         }
     }

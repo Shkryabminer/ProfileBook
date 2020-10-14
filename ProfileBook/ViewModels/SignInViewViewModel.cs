@@ -11,6 +11,7 @@ using ProfileBook.Views;
 using ProfileBook.Services;
 using ProfileBook.Models;
 using Acr.UserDialogs;
+using ProfileBook.Services.Autorization;
 
 namespace ProfileBook.ViewModels
 {
@@ -19,26 +20,23 @@ namespace ProfileBook.ViewModels
         #region Props
         string _login;
         bool _signInIsActive;
-      //  public event PropertyChangingEventHandler PropertyChanged;
+        IAutorization Autorizator { get;  set; }
+        
         public bool SignInIsActiv
         {
             get { return !(Login == "" || Password == ""); }
             set
             {
                 SetProperty(ref _signInIsActive, value);
-               
+
             }
-        }
-       //protected override void OnPropertyChanged(string prop="")
-       // {
-       //     PropertyChanged(this, new PropertyChangingEventArgs(prop));
-       // }
+        }        
         public string Login
         {
             get {
                 if (_login == null)
-                    _login = ""; 
-                return  _login; }
+                    _login = "";
+                return _login; }
             set { SetProperty(ref _login, value);
                 RaisePropertyChanged("SignInIsActiv");
             }
@@ -57,15 +55,18 @@ namespace ProfileBook.ViewModels
             }
         }
 
+       
+
         private ICommand _toSignUpViewCommand;
         public ICommand ToSignUpViewCommand => _toSignUpViewCommand ?? (_toSignUpViewCommand = new Command(ToSignUpPage));
         private ICommand _toMainListViewCommand;
         public ICommand ToMainListViewCommand => _toMainListViewCommand ?? (_toMainListViewCommand = new Command(SwapToMainView));
         public IAuthentificationService _AuthentificationService { get; private set; }
         #endregion
-        public SignInViewViewModel(INavigationService navigationServcie, IAuthentificationService authentificationService) : base(navigationServcie)
+        public SignInViewViewModel(INavigationService navigationServcie, IAuthentificationService authentificationService, IAutorization autorizator) : base(navigationServcie)
         {
             _AuthentificationService = authentificationService;
+            Autorizator = autorizator;
         }
         public async void ToSignUpPage(object obj)
         {
@@ -77,9 +78,11 @@ namespace ProfileBook.ViewModels
             IUser authUser= _AuthentificationService.GetAuthUser(Login, Password);
             if (authUser != null)
             {
-                var navParams = new NavigationParameters();
-                navParams.Add("User", authUser);
-                await NavigationService.NavigateAsync($"{nameof(MainListView)}", navParams);
+                //   var navParams = new NavigationParameters();
+                // navParams.Add("User", authUser);
+                //   await NavigationService.NavigateAsync($"/{nameof(MainListView)}", navParams);
+                Autorizator.SetActiveUser(authUser.UserID);
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else
             {
@@ -101,6 +104,11 @@ namespace ProfileBook.ViewModels
                 recivedLogin = "";
             Login = recivedLogin;
             Password = "";
+        }
+        public override void Initialize(INavigationParameters parameters)
+        {
+            base.Initialize(parameters);
+            Console.WriteLine("Overrided Inintialize signview");
         }
     }
 }

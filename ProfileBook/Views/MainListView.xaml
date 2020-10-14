@@ -26,18 +26,21 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
+
                         <ViewCell.ContextActions>
                             <MenuItem
-                                Command="{Binding BindingContext.SelectProfileCommand, Source={x:Reference  profilesListView}}"
+                                Command="{Binding BindingContext.SelectProfileCommand, Source={x:Reference profilesListView}}"
                                 CommandParameter="{Binding .}"
                                 Text="EDIT" />
                             <MenuItem
-                                Command="{Binding BindingContext.DeleteProfileCommand, Source={x:Reference profilesListView}}" 
+                                Command="{Binding BindingContext.DeleteProfileCommand, Source={x:Reference profilesListView}}"
                                 CommandParameter="{Binding .}"
                                 Text="DELETE" />
                         </ViewCell.ContextActions>
                         <ViewCell.View>
+
                             <StackLayout Orientation="Horizontal">
+
                                 <Image
                                     HeightRequest="40"
                                     Source="{Binding Picture}"

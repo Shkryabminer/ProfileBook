@@ -1,13 +1,19 @@
-﻿using Prism.Commands;
+﻿using Acr.UserDialogs;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Navigation.Xaml;
 using ProfileBook.Models;
 using ProfileBook.Services;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace ProfileBook.ViewModels
 {
@@ -15,24 +21,34 @@ namespace ProfileBook.ViewModels
     {
         #region Props
 
-        IProfile _profile;
+        IProfile _currentProfile;
         bool _saveIsActive;
         public bool SaveIsActive
         {
-            get { return !(_Profile.FirstName == "" || _Profile.FirstName == null || _Profile.SecondName == "" || _Profile.SecondName == null); }
+            get {
+                return ((CurrentProfile.FirstName != "" && CurrentProfile.FirstName != null) && (CurrentProfile.SecondName != "" && CurrentProfile.SecondName != null)); 
+            }
             set { SetProperty(ref _saveIsActive, value); }
         }
-        public IProfile _Profile
+        public IProfile CurrentProfile
         {
-            set { SetProperty(ref _profile, value);
-                RaisePropertyChanged("SaveIsActive");
-            }
-            get { return _profile; }
+            set {
+                SetProperty(ref _currentProfile, value);
+                
+                RaisePropertyChanged(nameof(SaveIsActive));
+                }
+            get { return _currentProfile; }
         }
-       ICommand _saveProfileCommand;
-        public ICommand SaveProfileCommand => _saveProfileCommand ?? (_saveProfileCommand = new Command(SaveProfile));
-
         #endregion
+        #region Commands
+        ICommand _saveProfileCommand;
+        public ICommand SaveProfileCommand => _saveProfileCommand ?? (_saveProfileCommand = new Command(SaveProfile));
+        ICommand _imageTapCommand;
+        public ICommand ImageTapCommand => _imageTapCommand ?? (_imageTapCommand = new Command(ImageTap));
+        #endregion
+
+
+
         public IProfileRepository ProfilesRepository { get; private set; }
         public AddEditProfileBookViewModel(INavigationService navigationServcie, IProfileRepository profilesRepository) : base(navigationServcie)
         {
@@ -45,15 +61,48 @@ namespace ProfileBook.ViewModels
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            _Profile = parameters.GetValue<IProfile>("Profile") as Profile;
+            CurrentProfile = parameters.GetValue<IProfile>("Profile") as Models.Profile;
             base.OnNavigatedTo(parameters);
         }
-         void SaveProfile()
+         async void SaveProfile()
         {
-            ProfilesRepository.SaveContact(_Profile);
+            ProfilesRepository.SaveContact(CurrentProfile);
+            await NavigationService.GoBackAsync();
         }
-
-
+        private async void  ImageTap(object obj)
+        {
+            ActionSheetConfig config = new ActionSheetConfig();
+            config.SetUseBottomSheet(true);
+            var galeryIcon = await BitmapLoader.Current.LoadFromResource("ic_collections.png",20f,20f);
+            var photoIcon = await BitmapLoader.Current.LoadFromResource("ic_camera_alt.png", 20f, 20f);
+            config.Add("Take Picture From Galery", SetPictureFromGalery, galeryIcon);
+            config.Add("Take Picture From Camera", SetFromCamera, photoIcon);
+            config.SetCancel(null, null, null); 
+            UserDialogs.Instance.ActionSheet(config);
+        }
+         async void SetPictureFromGalery()
+        {
+            if (CrossMedia.Current.IsPickPhotoSupported)
+            {
+                MediaFile file = await CrossMedia.Current.PickPhotoAsync();
+                CurrentProfile.Picture = file.Path;
+                RaisePropertyChanged(nameof(CurrentProfile));
+            }
+        }
+        async void SetFromCamera()
+        {
+            if (CrossMedia.Current.IsTakePhotoSupported && CrossMedia.Current.IsCameraAvailable)
+            {
+                var options = new StoreCameraMediaOptions();
+                options.SaveToAlbum = true;
+                MediaFile file = await CrossMedia.Current.TakePhotoAsync(options);
+                if (file == null)
+                    return;
+                CurrentProfile.Picture = file.Path;
+                RaisePropertyChanged(nameof(CurrentProfile));
+            }
+        }
+        
 
 
     }
