@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ProfileBook.Models
 {
-   public interface IProfile
+   public interface IProfile:IItem
     {
-        int Id { get; set; }
+      //  int ID { get; set; }
         string FirstName { get; set; }
         string SecondName { get; set; }
         string Picture { get; set; }

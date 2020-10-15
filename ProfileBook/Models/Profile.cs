@@ -10,7 +10,7 @@ namespace ProfileBook.Models
 
     {
         [AutoIncrement, PrimaryKey, Column("ID")]
-        public int Id { get; set; }
+        public  int ID { get; set; }
         public String FirstName { get; set; }
         public String SecondName { get; set; }
         string _picture;

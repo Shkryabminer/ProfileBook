@@ -36,7 +36,7 @@ namespace ProfileBook
 
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
+         {
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
@@ -44,9 +44,14 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
 
+           // containerRegistry.Register<IItem>();
             containerRegistry.Register<IUser, User>();
             containerRegistry.Register<IProfile, Profile>();
 
+        //    containerRegistry.Register<IRepository<User>, Repository<User>>();
+       //     containerRegistry.Register<IRepository<Profile>, Repository<Profile>>();
+            //containerRegistry.RegisterInstance<IRepository<T>>(Container.Resolve<Repository<T>>());
+            // containerRegistry.RegisterInstance<IRepository<Profile>>(Container.Resolve<Repository<Profile>>());
             containerRegistry.Register<IAutorization,AutorizationService>();
             containerRegistry.Register<IProfileRepository, ProfileRepository>();            
             containerRegistry.Register<IUserRepository, UserRepository>();

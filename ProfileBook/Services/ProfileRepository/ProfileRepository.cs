@@ -41,10 +41,10 @@ namespace ProfileBook.Services
 
         public int SaveContact(IProfile contact)
         {
-            if (contact.Id != 0)
+            if (contact.ID != 0)
             {
                 database.Update(contact);
-                return contact.Id;
+                return contact.ID;
             }
             else
             {

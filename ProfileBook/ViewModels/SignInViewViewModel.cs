@@ -28,7 +28,6 @@ namespace ProfileBook.ViewModels
             set
             {
                 SetProperty(ref _signInIsActive, value);
-
             }
         }        
         public string Login
@@ -41,7 +40,6 @@ namespace ProfileBook.ViewModels
                 RaisePropertyChanged("SignInIsActiv");
             }
         }
-
         string _password;
         public string Password
         {
@@ -53,9 +51,7 @@ namespace ProfileBook.ViewModels
             set { SetProperty(ref _password, value);
                 RaisePropertyChanged("SignInIsActiv");
             }
-        }
-
-       
+        }      
 
         private ICommand _toSignUpViewCommand;
         public ICommand ToSignUpViewCommand => _toSignUpViewCommand ?? (_toSignUpViewCommand = new Command(ToSignUpPage));
@@ -81,7 +77,7 @@ namespace ProfileBook.ViewModels
                 //   var navParams = new NavigationParameters();
                 // navParams.Add("User", authUser);
                 //   await NavigationService.NavigateAsync($"/{nameof(MainListView)}", navParams);
-                Autorizator.SetActiveUser(authUser.UserID);
+                Autorizator.SetActiveUser(authUser.ID);
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else
@@ -92,8 +88,8 @@ namespace ProfileBook.ViewModels
                
               UserDialogs.Instance.Alert("Неверный пользователь или пароль");
                 Password = "";
-
             }
+
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {

@@ -52,23 +52,28 @@ namespace ProfileBook.ViewModels
         ICommand _createUser;
         public ICommand CreateUser => _createUser ?? (_createUser = new Command(AddUser));
         #endregion
-
-        public IUserRepository UsersRepository { get; private set; }
+        public IRepository<User> Repository { get; private set; }
+        //public IUserRepository UsersRepository { get; private set; } Repository
         public IPasswordValidator SignUpValidator { get; private set; }
-        public SignUpViewViewModel(INavigationService navigationService, IUserRepository usersRepository, IPasswordValidator signUpValidator) : base(navigationService)
+        //public SignUpViewViewModel(INavigationService navigationService, IUserRepository usersRepository, IPasswordValidator signUpValidator) : base(navigationService)
+        //{
+        //    UsersRepository = usersRepository;//Repository
+        //    SignUpValidator = signUpValidator;
+        //}
+        public SignUpViewViewModel(INavigationService navigationService, IRepository<User> Repository, IPasswordValidator signUpValidator) : base(navigationService)
         {
-            UsersRepository = usersRepository;
+            //UsersRepository = usersRepository;//Repository
             SignUpValidator = signUpValidator;
         }
         public async void AddUser()
         {
-            string message = SignUpValidator.IsValid(Login, Password, Confirm, UsersRepository.GetUsers());
-           
+            // string message = SignUpValidator.IsValid(Login, Password, Confirm, UsersRepository.GetUsers());Repository
+            string message = SignUpValidator.IsValid(Login, Password, Confirm, Repository.GetItems());
             if (message == "Valid")
             {
                 var navParam = new NavigationParameters();
                 navParam.Add("Login", Login);
-                UsersRepository.SaveUser(new User(Login, Password));
+                Repository.SaveItem(new User(Login, Password));
                 await NavigationService.NavigateAsync($"/{nameof(SignInView)}",navParam);
             }
             else UserDialogs.Instance.Alert(message, "Ok");
