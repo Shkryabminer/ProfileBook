@@ -40,7 +40,7 @@ namespace ProfileBook.Services
         public IUser GetUser(int id)
         {
             var user = from u in GetUsers()
-                       where u.UserID == id
+                       where u.ID == id
                        select u;
             return user.First();
         }

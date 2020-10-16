@@ -22,7 +22,8 @@ namespace ProfileBook.ViewModels
         #region Props
         IUser authUser;
         public IAutorization Autorizator { get; private set; }
-        public IProfileRepository ProfilesRepository { get; private set; }
+        public IRepository Repository { get; private set; }
+        //public IProfileRepository ProfilesRepository { get; private set; } Repository
         private List<Profile> _profiles;
         public List<Profile> Profiles
         {
@@ -91,15 +92,21 @@ namespace ProfileBook.ViewModels
             UserDialogs.Instance.ActionSheet(config);
         }
         #endregion
-        public MainListViewViewModel(INavigationService navigationService, IProfileRepository profilesRepository, IAutorization autorization) : base(navigationService)
+        //public MainListViewViewModel(INavigationService navigationService, IProfileRepository profilesRepository, IAutorization autorization) : base(navigationService)
+        //{
+        //    ProfilesRepository = profilesRepository;
+        //    Autorizator = autorization;
+        //}
+        public MainListViewViewModel(INavigationService navigationService, IRepository repository,
+            IAutorization autorization) : base(navigationService)
         {
-            ProfilesRepository = profilesRepository;
+            Repository = repository;            
             Autorizator = autorization;
         }
 
         public void AddNewProfile(object obj)
         {
-            //IProfile prof = new Profile(authUser.UserID);
+            //IProfile prof = new Profile(authUser.ID);
             IProfile prof = new Profile(Autorizator.GetActiveUser());
             SwapToProfilePage(prof);
         }
@@ -110,7 +117,7 @@ namespace ProfileBook.ViewModels
         }
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
-            //Profiles = ProfilesRepository.GetUserContacts(authUser.UserID).ToList();
+            //Profiles = ProfilesRepository.GetUserContacts(authUser.ID).ToList();
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -120,13 +127,19 @@ namespace ProfileBook.ViewModels
             //{
             //    await NavigationService.NavigateAsync($"/{nameof(SignInView)}");
             //}
-           // else
+            // else
             //{               
-                //if (authUser == null)//проверяется был ли установлен активный пользователь ранее
-                //    authUser = parameters.GetValue<User>("User") as User;
-                //Profiles = ProfilesRepository.GetUserContacts(authUser.UserID).ToList();
-            if(Autorizator.Autorizeted())
-            Profiles = ProfilesRepository.GetUserContacts(Autorizator.GetActiveUser()).ToList();
+            //if (authUser == null)//проверяется был ли установлен активный пользователь ранее
+            //    authUser = parameters.GetValue<User>("User") as User;
+            //Profiles = ProfilesRepository.GetUserContacts(authUser.ID).ToList();
+            if (Autorizator.Autorizeted())
+            {
+                var query = from p in Repository.GetItems<Profile>()
+                            where p.UserID == Autorizator.GetActiveUser()
+                            select p;
+                Profiles = query.ToList();
+                // Profiles = ProfilesRepository.GetUserContacts(Autorizator.GetActiveUser()).ToList(); }
+            }
             //}
         }
 
@@ -150,8 +163,13 @@ namespace ProfileBook.ViewModels
                 {
                     if (b)
                     {
-                        ProfilesRepository.DeleteContact(item.Id);
-                        Profiles = ProfilesRepository.GetUserContacts(authUser.UserID).ToList();
+                        Repository.DeleteItem<Profile>(item);
+                        //Repository.DeleteContact(item.ID);
+                        //Profiles = ProfilesRepository.GetUserContacts(authUser.ID).ToList();
+                        var query = from p in Repository.GetItems<Profile>()
+                                    where p.UserID == Autorizator.GetActiveUser()
+                                    select p;
+                        Profiles = query.ToList();
                     }
                 });
                 UserDialogs.Instance.Confirm(config);

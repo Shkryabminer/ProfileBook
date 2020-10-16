@@ -21,7 +21,7 @@ namespace ProfileBook.ViewModels
     {
         #region Props
 
-        IProfile _currentProfile;
+        Models.Profile _currentProfile;
         bool _saveIsActive;
         public bool SaveIsActive
         {
@@ -30,7 +30,7 @@ namespace ProfileBook.ViewModels
             }
             set { SetProperty(ref _saveIsActive, value); }
         }
-        public IProfile CurrentProfile
+        public Models.Profile CurrentProfile
         {
             set {
                 SetProperty(ref _currentProfile, value);
@@ -48,12 +48,17 @@ namespace ProfileBook.ViewModels
         #endregion
 
 
-
-        public IProfileRepository ProfilesRepository { get; private set; }
-        public AddEditProfileBookViewModel(INavigationService navigationServcie, IProfileRepository profilesRepository) : base(navigationServcie)
+        public IRepository Repository { get; private set; }
+        //public IProfileRepository ProfilesRepository { get; private set; } Repository
+        //public AddEditProfileBookViewModel(INavigationService navigationServcie, IProfileRepository profilesRepository) : base(navigationServcie)
+        //{
+        //    ProfilesRepository = profilesRepository;
+        //}
+        public AddEditProfileBookViewModel(INavigationService navigationServcie, IRepository repository) : base(navigationServcie)
         {
-            ProfilesRepository = profilesRepository;
+            Repository = repository;
         }
+
 
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
@@ -66,7 +71,7 @@ namespace ProfileBook.ViewModels
         }
          async void SaveProfile()
         {
-            ProfilesRepository.SaveContact(CurrentProfile);
+            Repository.SaveItem(CurrentProfile);
             await NavigationService.GoBackAsync();
         }
         private async void  ImageTap(object obj)

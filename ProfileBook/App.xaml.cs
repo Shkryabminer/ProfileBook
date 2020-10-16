@@ -19,7 +19,6 @@ namespace ProfileBook
         public App()
         {
             InitializeComponent();
-
         }
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
@@ -28,7 +27,7 @@ namespace ProfileBook
         protected override async void OnInitialized()
         {
             Autorizator = new AutorizationService();
-            //await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
+           // await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
             if ((Autorizator.Autorizeted()))
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             else { await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}"); }
@@ -36,7 +35,7 @@ namespace ProfileBook
 
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-        {
+         {
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
@@ -44,9 +43,16 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
 
+            containerRegistry.Register<IItem>();
             containerRegistry.Register<IUser, User>();
             containerRegistry.Register<IProfile, Profile>();
 
+            // containerRegistry.Register<IRepository<User>, Repository<User>>();
+            //  containerRegistry.Register<IRepository<Profile>, Repository<Profile>>();
+            //containerRegistry.RegisterInstance<IRepository<User>>(Container.Resolve<Repository<User>>());
+            //  containerRegistry.RegisterInstance<IRepository<Profile>>(Container.Resolve<Repository<Profile>>());
+            containerRegistry.Register<IRepository, Repository>();
+           
             containerRegistry.Register<IAutorization,AutorizationService>();
             containerRegistry.Register<IProfileRepository, ProfileRepository>();            
             containerRegistry.Register<IUserRepository, UserRepository>();
