@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services;
+using ProfileBook.Services.ProfileService;
 using Splat;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace ProfileBook.ViewModels
     public class AddEditProfileBookViewModel : BaseViewModel
     {
         #region --Properties--
-
+        private readonly IProfileService _profileService;
        private Profile _currentProfile;
         bool _saveIsActive;
         public bool SaveIsActive
@@ -54,8 +55,11 @@ namespace ProfileBook.ViewModels
         //{
         //    ProfilesRepository = profilesRepository;
         //}
-        public AddEditProfileBookViewModel(INavigationService navigationServcie, IRepository repository) : base(navigationServcie)
+        public AddEditProfileBookViewModel(INavigationService navigationServcie,
+            IRepository repository,
+            IProfileService profileService) : base(navigationServcie)
         {
+            _profileService = profileService;
             Repository = repository;
         }
 
@@ -72,7 +76,7 @@ namespace ProfileBook.ViewModels
        private  async void SaveProfile()
         {
             CurrentProfile.Date = DateTime.Now;
-            Repository.SaveItem(CurrentProfile);
+            _profileService.SaveOrUpdateProfile(CurrentProfile);
             await NavigationService.GoBackAsync();
         }
         private async void  ImageTap(object obj)

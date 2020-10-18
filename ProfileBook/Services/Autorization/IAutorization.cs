@@ -9,7 +9,7 @@ namespace ProfileBook.Services.Autorization
         bool Autorizeted();
         void LogOut();
         int GetActiveUser();
-        //void SetActiveUser(int id);
+        void SetActiveUser(int id);
 
     }
 }

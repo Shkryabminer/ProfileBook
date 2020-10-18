@@ -75,6 +75,7 @@ namespace ProfileBook.ViewModels
             if (authUser != null)
             {
                 //_autorizationService.SetActiveUser(authUser.ID);
+                Autorizator.SetActiveUser(authUser.ID);
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else

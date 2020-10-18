@@ -62,7 +62,7 @@ namespace ProfileBook.ViewModels
         public ICommand SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new Command<object>(SelectProfile));
 
         private ICommand _setingsButtonCommand;
-        public ICommand SettingsButtonCommand => _setingsButtonCommand ?? (_setingsButtonCommand = new Command(OnSeetingsButton));        
+        public ICommand SettingsButtonCommand => _setingsButtonCommand ?? (_setingsButtonCommand = new Command(OnSettingsButton));        
 
         private ICommand _addNewProfileCommand;
         public ICommand AddNewProfileCommand => _addNewProfileCommand ?? (_addNewProfileCommand = new Command(AddNewProfile));
@@ -133,7 +133,7 @@ namespace ProfileBook.ViewModels
                 _userDialogs.Confirm(config);
             }
         }
-        private async void OnSeetingsButton(object obj)
+        private async void OnSettingsButton(object obj)
         {
             await NavigationService.NavigateAsync($"{nameof(SettingsView)}");
         }
@@ -179,6 +179,7 @@ namespace ProfileBook.ViewModels
         private void SetProfiles()
         {
             Profiles= _profileService.GetProfiles(_autorizationService.GetActiveUser());
+            RaisePropertyChanged($"{nameof(Profiles)}");
         }
         #endregion
     }

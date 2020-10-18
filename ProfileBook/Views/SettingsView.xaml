@@ -3,8 +3,7 @@
     x:Class="ProfileBook.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True"
+    xmlns:prism="http://prismlibrary.com"    
     Title="Settings">
     <ScrollView Padding="20">
         <Frame VerticalOptions="StartAndExpand" CornerRadius="20"
@@ -16,22 +15,23 @@
                     <RadioButton
                     x:Name="sort1"
                     GroupName="sort"
-                    IsChecked="False"
+                    IsChecked="{Binding Sort1}"
                     VerticalOptions="CenterAndExpand" />
                     <Label Text="упорядочить по дате создания" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <RadioButton
                     x:Name="sort2"
+                        IsChecked="{Binding Sort2}"
                     GroupName="sort"
                     VerticalOptions="CenterAndExpand" />
                     <Label Text="упорядочить по имени" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <RadioButton
-                    x:Name="sort2"
+                    x:Name="sort3"
                     GroupName="sort"
-                    IsChecked="False"
+                    IsChecked="{Binding Sort3}"
                     VerticalOptions="CenterAndExpand" />
                     <Label Text="упорядочить по нику" VerticalOptions="CenterAndExpand" />
                 </StackLayout>

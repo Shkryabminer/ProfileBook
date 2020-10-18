@@ -14,6 +14,7 @@ using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
+using ProfileBook.Services.ProfileService;
 
 namespace ProfileBook
 {
@@ -53,10 +54,12 @@ namespace ProfileBook
             //Pluggins
             containerRegistry.RegisterInstance<ISettings>(CrossSettings.Current);
             containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
-           
+
             //Services
+            
             containerRegistry.Register<IRepository, Repository>();
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
+            containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
             containerRegistry.Register<IAutorization, AutorizationService>();
             containerRegistry.Register<IAuthentificationService, AutentificationService>();
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();

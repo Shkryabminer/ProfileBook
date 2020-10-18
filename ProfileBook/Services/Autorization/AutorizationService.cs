@@ -27,9 +27,9 @@ namespace ProfileBook.Services.Autorization
         {
             return Manager.AutorizatedUserId;
         }
-        //public void SetActiveUser(int id)
-        //{
-        //    Manager.AutorizatedUserId = id;
-        //}
+        public void SetActiveUser(int id)
+        {
+            Manager.AutorizatedUserId = id;
+        }
     }
 }

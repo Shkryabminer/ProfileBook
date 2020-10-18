@@ -27,6 +27,7 @@ namespace ProfileBook.ViewModels
         #endregion
         public SettingsViewViewModel(INavigationService navigation, ISettingsManager manager):base(navigation)
         {
+            Sort1 = true;
             _settingsManager = manager;
         }
         #region --Privat helpers--
