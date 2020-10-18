@@ -3,16 +3,18 @@
     x:Class="ProfileBook.Views.MainListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ProfileBook.Converters;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
     Title="MainList">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="ic_settings.png" />
+        <ToolbarItem Command="{Binding SettingsButtonCommand}" Icon="ic_settings.png" />
         <ToolbarItem Command="{Binding LogOutCommand}" Icon="ic_exit_to_app.png" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <x:Double x:Key="ButtonSize">100</x:Double>
             <x:Int32 x:Key="CornerRadius">50</x:Int32>
+            <local:DateTimeToStringConverter x:Key="dateConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid>
@@ -51,7 +53,7 @@
                                         Text="{Binding Path=FirstName}"
                                         TextColor="Blue" />
                                     <Label Text="{Binding Path=SecondName}" TextColor="blue" />
-                                    <Label Text="{Binding Date}" TextColor="blue"/>
+                                    <Label Text="{Binding Date, Converter={StaticResource dateConverter}}" TextColor="blue" />
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell.View>

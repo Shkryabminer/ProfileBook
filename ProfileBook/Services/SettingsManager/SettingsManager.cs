@@ -27,8 +27,6 @@ namespace ProfileBook.Services
             set => SetPlugin.AddOrUpdateValue(nameof(SelectedSortMethode), value);
         }
 
-       
-
         #endregion
 
 

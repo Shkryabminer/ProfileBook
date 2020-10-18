@@ -31,14 +31,13 @@ namespace ProfileBook
         }
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
-            // _autorizationService = new AutorizationService();
+            
         }
         protected override async void OnInitialized()
         {
             InitializeComponent();
 
             await InitNavigationAsync();
-
         }
 
 
@@ -51,23 +50,14 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewViewModel>();
-
+            //Pluggins
             containerRegistry.RegisterInstance<ISettings>(CrossSettings.Current);
             containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
-
-            //containerRegistry.Register<IItem>();
-            // containerRegistry.Register<IUser, User>();
-            //  containerRegistry.Register<IProfile, Profile>();
-
-            // containerRegistry.Register<IRepository<User>, _repository<User>>();
-            //  containerRegistry.Register<IRepository<Profile>, _repository<Profile>>();
-            //containerRegistry.RegisterInstance<IRepository<User>>(Container.Resolve<_repository<User>>());
-            //  containerRegistry.RegisterInstance<IRepository<Profile>>(Container.Resolve<_repository<Profile>>());
-
+           
+            //Services
             containerRegistry.Register<IRepository, Repository>();
-
+            containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.Register<IAutorization, AutorizationService>();
-
             containerRegistry.Register<IAuthentificationService, AutentificationService>();
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();
         }

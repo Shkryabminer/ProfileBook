@@ -4,33 +4,33 @@ using Plugin.Media.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
-using Prism.Navigation.Xaml;
 using ProfileBook.Models;
 using ProfileBook.Services;
 using Splat;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
+
+
 
 namespace ProfileBook.ViewModels
 {
     public class AddEditProfileBookViewModel : BaseViewModel
     {
-        #region Props
+        #region --Properties--
 
-        Models.Profile _currentProfile;
+       private Profile _currentProfile;
         bool _saveIsActive;
         public bool SaveIsActive
         {
             get {
-                return ((CurrentProfile.FirstName != "" && CurrentProfile.FirstName != null) && (CurrentProfile.SecondName != "" && CurrentProfile.SecondName != null)); 
+                return ((CurrentProfile.FirstName != "" && CurrentProfile.FirstName != null)
+                    && (CurrentProfile.SecondName != "" && CurrentProfile.SecondName != null)); 
             }
             set { SetProperty(ref _saveIsActive, value); }
         }
-        public Models.Profile CurrentProfile
+        public Profile CurrentProfile
         {
             set {
                 SetProperty(ref _currentProfile, value);

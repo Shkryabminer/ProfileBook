@@ -15,6 +15,7 @@ using System.Threading;
 using System.Runtime.CompilerServices;
 using ProfileBook.Services.Autorization;
 using ProfileBook.Services.ProfileService;
+using System.Threading.Tasks;
 
 namespace ProfileBook.ViewModels
 {
@@ -50,15 +51,23 @@ namespace ProfileBook.ViewModels
            
             set=> SetProperty(ref _labelIsVisible, value); 
         }
-
+        private string _date;
+        public string Date {
+            set { SetProperty(ref _date, value); }
+            get => SelectedProfile.Date.ToLongTimeString();
+        }
         #endregion
         #region Commands
-        ICommand _selectProfileCommand;
+        private ICommand _selectProfileCommand;
         public ICommand SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new Command<object>(SelectProfile));
 
-        ICommand _addNewProfileCommand;
+        private ICommand _setingsButtonCommand;
+        public ICommand SettingsButtonCommand => _setingsButtonCommand ?? (_setingsButtonCommand = new Command(OnSeetingsButton));        
+
+        private ICommand _addNewProfileCommand;
         public ICommand AddNewProfileCommand => _addNewProfileCommand ?? (_addNewProfileCommand = new Command(AddNewProfile));
-        ICommand _deleteProfileCommand;
+       
+        private ICommand _deleteProfileCommand;
         public ICommand DeleteProfileCommand => _deleteProfileCommand ?? (_deleteProfileCommand = new Command<object>(DeleteProfile));
 
         ICommand _logOutCommand;
@@ -84,13 +93,12 @@ namespace ProfileBook.ViewModels
             _autorizationService = autorization;
         }
         #region --Command handlers--
-        private void SelectProfile(object obj)
+        private  void SelectProfile(object obj)
         {
             SwapToProfilePage(obj as Profile);
         }
-        public void AddNewProfile(object obj)
-        {
-            //IProfile prof = new Profile(authUser.ID);
+        public  void AddNewProfile(object obj)
+        {             
             IProfile prof = new Profile(_autorizationService.GetActiveUser());
             SwapToProfilePage(prof);
         }
@@ -125,6 +133,10 @@ namespace ProfileBook.ViewModels
                 _userDialogs.Confirm(config);
             }
         }
+        private async void OnSeetingsButton(object obj)
+        {
+            await NavigationService.NavigateAsync($"{nameof(SettingsView)}");
+        }
         public void ShowImage(object sender, SelectedItemChangedEventArgs e)
         {
         }
@@ -140,7 +152,7 @@ namespace ProfileBook.ViewModels
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {            
         }
-        public override async void OnNavigatedTo(INavigationParameters parameters)
+        public override  void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
             
