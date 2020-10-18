@@ -7,12 +7,12 @@ using System.Text;
 
 namespace ProfileBook.Services
 {
-    public class Repository : IRepository//<T> where T : IItem,new()//, IUser
+    public class Repository : IRepository
     {
 
-        SQLiteConnection dataBase;
-        string _dataPath;
-        public string DataPath
+        private readonly SQLiteConnection _dataBase;
+        private string _dataPath;
+        private string DataPath
         {
             get
             {
@@ -24,59 +24,48 @@ namespace ProfileBook.Services
         }
         public Repository(string dataPath) : this()
         {
-            DataPath = dataPath;
-            //dataBase = new SQLiteConnection(DataPath);
-            
+            DataPath = dataPath;                        
         }
         public Repository()
         {           
-            dataBase = new SQLiteConnection(DataPath);
+            _dataBase = new SQLiteConnection(DataPath);
             InitTable<User>();
             InitTable<Profile>();
         }
-        public void TableInit<T>() where T : IItem, new()
-        {
-            dataBase.CreateTable<T>();
-        }
+        #region --Implement Irepository--
         public int DeleteItem<T>(T item) where T : IItem, new()
         {
 
-            return dataBase.Delete<T>(item.ID);
-        }
-
-        //public T GetItem(int id)
-        //{
-        //    return user.First();
-        //    throw new NotImplementedException();
-        //}
+            return _dataBase.Delete<T>(item.ID);
+        }        
 
         public IEnumerable<T> GetItems<T>() where T : IItem, new()
         {
-            return dataBase.Table<T>().ToList();
+            return _dataBase.Table<T>();
         }
 
         public int SaveItem<T>(T item) where T : IItem, new()
         {
             if (item.ID != 0)
             {
-                dataBase.Update(item);
+                _dataBase.Update(item);
                 return item.ID;
             }
             else
             {
-                return dataBase.Insert(item);
+                return _dataBase.Insert(item);
             }
         }
+        #endregion
 
+        #region --Private helpers--
         private void InitTable<T>() where T : IItem, new()
         {
-            dataBase.CreateTable<T>();
+            _dataBase.CreateTable<T>();
         }
+        #endregion
 
-        //public int DeleteItem<T>(int id) where T : IItem, new()
-        //{
-        //    throw new NotImplementedException();
-        //}
+
     }
 }
 

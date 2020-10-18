@@ -8,8 +8,7 @@
         <ToolbarItem
             x:Name="SaveButton"
             Command="{Binding SaveProfileCommand}"
-            IconImageSource="ic_save.png"
-            IsEnabled="{Binding SaveIsActive}" />
+            IconImageSource="ic_save.png" />
     </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout
@@ -55,7 +54,6 @@
 
             <Grid
                 Margin="5,20,0,0"
-                BackgroundColor="Gray"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
                 <Label
@@ -68,7 +66,6 @@
                     MaxLength="120"
                     Text="{Binding CurrentProfile.Description}"
                     VerticalOptions="FillAndExpand" />
-
             </Grid>
         </StackLayout>
 

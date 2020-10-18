@@ -10,56 +10,74 @@ using ProfileBook.Models;
 using ProfileBook.Services;
 using ProfileBook.Services.Validators;
 using ProfileBook.Services.Autorization;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
+using System.Threading.Tasks;
+using Acr.UserDialogs;
 
 namespace ProfileBook
 {
     public partial class App : PrismApplication
     {
-       IAutorization Autorizator { get; set; }
+        private IAutorization autorization;
+        private IAutorization AutorizationService
+        {
+            get => autorization ?? (autorization = Container.Resolve<IAutorization>());
+        }
+
         public App()
         {
             InitializeComponent();
         }
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
-           // Autorizator = new AutorizationService();
+            // _autorizationService = new AutorizationService();
         }
         protected override async void OnInitialized()
         {
-            Autorizator = new AutorizationService();
-           // await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
-            if ((Autorizator.Autorizeted()))
-                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
-            else { await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}"); }
+            InitializeComponent();
+
+            await InitNavigationAsync();
+
         }
 
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
-         {
-
+        {
+            //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<SignInView, SignInViewViewModel>();
             containerRegistry.RegisterForNavigation<SignUpView, SignUpViewViewModel>();
             containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsView, SettingsViewViewModel>();
 
-            containerRegistry.Register<IItem>();
-            containerRegistry.Register<IUser, User>();
-            containerRegistry.Register<IProfile, Profile>();
+            containerRegistry.RegisterInstance<ISettings>(CrossSettings.Current);
+            containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
 
-            // containerRegistry.Register<IRepository<User>, Repository<User>>();
-            //  containerRegistry.Register<IRepository<Profile>, Repository<Profile>>();
-            //containerRegistry.RegisterInstance<IRepository<User>>(Container.Resolve<Repository<User>>());
-            //  containerRegistry.RegisterInstance<IRepository<Profile>>(Container.Resolve<Repository<Profile>>());
+            //containerRegistry.Register<IItem>();
+            // containerRegistry.Register<IUser, User>();
+            //  containerRegistry.Register<IProfile, Profile>();
+
+            // containerRegistry.Register<IRepository<User>, _repository<User>>();
+            //  containerRegistry.Register<IRepository<Profile>, _repository<Profile>>();
+            //containerRegistry.RegisterInstance<IRepository<User>>(Container.Resolve<_repository<User>>());
+            //  containerRegistry.RegisterInstance<IRepository<Profile>>(Container.Resolve<_repository<Profile>>());
+
             containerRegistry.Register<IRepository, Repository>();
-           
-            containerRegistry.Register<IAutorization,AutorizationService>();
-            containerRegistry.Register<IProfileRepository, ProfileRepository>();            
-            containerRegistry.Register<IUserRepository, UserRepository>();
+
+            containerRegistry.Register<IAutorization, AutorizationService>();
+
             containerRegistry.Register<IAuthentificationService, AutentificationService>();
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();
-            
-
         }
+        #region --Private helpers--
+        private async Task InitNavigationAsync()
+        {
+            if (AutorizationService.Autorizeted())
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
+            else { await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}"); }
+        }
+        #endregion
     }
 }

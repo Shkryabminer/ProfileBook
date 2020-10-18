@@ -53,22 +53,22 @@ namespace ProfileBook.ViewModels
         public ICommand CreateUser => _createUser ?? (_createUser = new Command(AddUser));
         #endregion
         public IRepository Repository { get; private set; }
-        //public IUserRepository UsersRepository { get; private set; } Repository
+        //public IUserRepository UsersRepository { get; private set; } _repository
         public IPasswordValidator SignUpValidator { get; private set; }
         //public SignUpViewViewModel(INavigationService navigationService, IUserRepository usersRepository, IPasswordValidator signUpValidator) : base(navigationService)
         //{
-        //    UsersRepository = usersRepository;//Repository
+        //    UsersRepository = usersRepository;//_repository
         //    SignUpValidator = signUpValidator;
         //}
         public SignUpViewViewModel(INavigationService navigationService, IRepository repository, IPasswordValidator signUpValidator) : base(navigationService)
         {
             Repository = repository;
-            //UsersRepository = usersRepository;//Repository
+            //UsersRepository = usersRepository;//_repository
             SignUpValidator = signUpValidator;
         }
         public async void AddUser()
         {
-            // string message = SignUpValidator.IsValid(Login, Password, Confirm, UsersRepository.GetUsers());Repository
+            // string message = SignUpValidator.IsValid(Login, Password, Confirm, UsersRepository.GetUsers());_repository
             string message = SignUpValidator.IsValid(Login, Password, Confirm, Repository.GetItems<User>());
             if (message == "Valid")
             {

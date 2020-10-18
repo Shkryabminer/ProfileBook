@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProfileBook.Views.SettingsView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <ScrollView>
+
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
+                <RadioButton
+                    x:Name="sort1"
+                    GroupName="sort"
+                    IsChecked="False"
+                    VerticalOptions="CenterAndExpand" />
+                <Label Text="Сортировать по имени" VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <RadioButton
+                    x:Name="sort2"
+                    GroupName="sort"
+                    VerticalOptions="CenterAndExpand" />
+                <Label Text="Сортировать по дате создания" VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <RadioButton
+                    x:Name="sort2"
+                    GroupName="sort"
+                    IsChecked="False"
+                    VerticalOptions="CenterAndExpand" />
+                <Label Text="Сортировать по дате создания" VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+        </StackLayout>
+
+    </ScrollView>
+
+</ContentPage>

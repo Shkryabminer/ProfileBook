@@ -49,7 +49,7 @@ namespace ProfileBook.ViewModels
 
 
         public IRepository Repository { get; private set; }
-        //public IProfileRepository ProfilesRepository { get; private set; } Repository
+        //public IProfileRepository ProfilesRepository { get; private set; } _repository
         //public AddEditProfileBookViewModel(INavigationService navigationServcie, IProfileRepository profilesRepository) : base(navigationServcie)
         //{
         //    ProfilesRepository = profilesRepository;
@@ -69,8 +69,9 @@ namespace ProfileBook.ViewModels
             CurrentProfile = parameters.GetValue<IProfile>("Profile") as Models.Profile;
             base.OnNavigatedTo(parameters);
         }
-         async void SaveProfile()
+       private  async void SaveProfile()
         {
+            CurrentProfile.Date = DateTime.Now;
             Repository.SaveItem(CurrentProfile);
             await NavigationService.GoBackAsync();
         }
@@ -85,7 +86,7 @@ namespace ProfileBook.ViewModels
             config.SetCancel(null, null, null); 
             UserDialogs.Instance.ActionSheet(config);
         }
-         async void SetPictureFromGalery()
+        private async void SetPictureFromGalery()
         {
             if (CrossMedia.Current.IsPickPhotoSupported)
             {
@@ -94,7 +95,7 @@ namespace ProfileBook.ViewModels
                 RaisePropertyChanged(nameof(CurrentProfile));
             }
         }
-        async void SetFromCamera()
+       private async void SetFromCamera()
         {
             if (CrossMedia.Current.IsTakePhotoSupported && CrossMedia.Current.IsCameraAvailable)
             {

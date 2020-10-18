@@ -49,8 +49,9 @@
                                     <Label
                                         FontAttributes="Bold"
                                         Text="{Binding Path=FirstName}"
-                                        TextColor="Black" />
-                                    <Label Text="{Binding Path=SecondName}" TextColor="Black" />
+                                        TextColor="Blue" />
+                                    <Label Text="{Binding Path=SecondName}" TextColor="blue" />
+                                    <Label Text="{Binding Date}" TextColor="blue"/>
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell.View>

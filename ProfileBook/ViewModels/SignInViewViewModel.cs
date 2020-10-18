@@ -40,7 +40,7 @@ namespace ProfileBook.ViewModels
                 RaisePropertyChanged("SignInIsActiv");
             }
         }
-        string _password;
+       private string _password;
         public string Password
         {
             get
@@ -74,10 +74,7 @@ namespace ProfileBook.ViewModels
             IUser authUser= _AuthentificationService.GetAuthUser(Login, Password);
             if (authUser != null)
             {
-                //   var navParams = new NavigationParameters();
-                // navParams.Add("User", authUser);
-                //   await NavigationService.NavigateAsync($"/{nameof(MainListView)}", navParams);
-                Autorizator.SetActiveUser(authUser.ID);
+                //_autorizationService.SetActiveUser(authUser.ID);
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else

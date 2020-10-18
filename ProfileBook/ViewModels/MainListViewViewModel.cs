@@ -14,57 +14,43 @@ using Splat;
 using System.Threading;
 using System.Runtime.CompilerServices;
 using ProfileBook.Services.Autorization;
+using ProfileBook.Services.ProfileService;
 
 namespace ProfileBook.ViewModels
 {
     public class MainListViewViewModel : BaseViewModel
     {
-        #region Props
-        IUser authUser;
-        public IAutorization Autorizator { get; private set; }
-        public IRepository Repository { get; private set; }
-        //public IProfileRepository ProfilesRepository { get; private set; } Repository
+        #region --Properties--
+        private IUser authUser;
+        private readonly IUserDialogs _userDialogs;
+        private readonly IAutorization _autorizationService;
+        
+        private readonly IProfileService _profileService;
         private List<Profile> _profiles;
         public List<Profile> Profiles
         {
-            get { return _profiles; }
+            get => _profiles;
             set
             {
                 SetProperty(ref _profiles, value);
                 RaisePropertyChanged("LabelIsVisible");
             }
         }
-
-        private Profile _profile;
+        private Profile _selectedProfile;
         public Profile SelectedProfile
         {
-            get
-            {
-                return _profile;
-            }
-            set
-            {
-                SetProperty(ref _profile, value);
-
-              //  OnPropertyChanged("SelectedProfile");
-                    
-
-            }
+            get=>_selectedProfile;
+            
+            set=>SetProperty(ref _selectedProfile, value);            
         }
-        //protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        //{
-        //    if (propertyName == "SelectedProfile"&&SelectedProfile!=null)
-        //    { ShowImageCommand.Execute(SelectedProfile); }
-        //    base.OnPropertyChanged(propertyName);
-        //}
-        bool _labelIsVisible;
+        private bool _labelIsVisible;
         public bool LabelIsVisible
         {
-            get { return (Profiles != null && Profiles.Count == 0); }
-            set
-            { SetProperty(ref _labelIsVisible, value); }
+            get =>(Profiles != null && Profiles.Count == 0); 
+           
+            set=> SetProperty(ref _labelIsVisible, value); 
         }
-        
+
         #endregion
         #region Commands
         ICommand _selectProfileCommand;
@@ -81,73 +67,42 @@ namespace ProfileBook.ViewModels
         ICommand _showImageCommand;
         public ICommand ShowImageCommand => _showImageCommand ?? (_showImageCommand = new Command<object>(ShowImage));
 
+        #endregion
+        //public MainListViewViewModel(INavigationService navigationService, IProfileRepository profilesRepository, IAutorization autorization) : base(navigationService)
+        //{
+        //    ProfilesRepository = profilesRepository;
+        //    _autorizationService = autorization;
+        //}
+        public MainListViewViewModel(
+            INavigationService navigationService,            
+            IAutorization autorization, 
+            IProfileService profileService,
+            IUserDialogs userDialogs) : base(navigationService)
+        {
+            _userDialogs = userDialogs;
+            _profileService = profileService;            
+            _autorizationService = autorization;
+        }
+        #region --Command handlers--
+        private void SelectProfile(object obj)
+        {
+            SwapToProfilePage(obj as Profile);
+        }
+        public void AddNewProfile(object obj)
+        {
+            //IProfile prof = new Profile(authUser.ID);
+            IProfile prof = new Profile(_autorizationService.GetActiveUser());
+            SwapToProfilePage(prof);
+        }
         private async void ShowImage(object obj)
         {
             var prof = obj as Profile;
             ActionSheetConfig config = new ActionSheetConfig();
             config.SetUseBottomSheet(true);
-            var galeryIcon = await BitmapLoader.Current.LoadFromResource(prof.Picture, 150f, 150f);            
+            var galeryIcon = await BitmapLoader.Current.LoadFromResource(prof.Picture, 150f, 150f);
             config.Add(null, null, galeryIcon);
             config.SetCancel(null, null, null);
-            UserDialogs.Instance.ActionSheet(config);
-        }
-        #endregion
-        //public MainListViewViewModel(INavigationService navigationService, IProfileRepository profilesRepository, IAutorization autorization) : base(navigationService)
-        //{
-        //    ProfilesRepository = profilesRepository;
-        //    Autorizator = autorization;
-        //}
-        public MainListViewViewModel(INavigationService navigationService, IRepository repository,
-            IAutorization autorization) : base(navigationService)
-        {
-            Repository = repository;            
-            Autorizator = autorization;
-        }
-
-        public void AddNewProfile(object obj)
-        {
-            //IProfile prof = new Profile(authUser.ID);
-            IProfile prof = new Profile(Autorizator.GetActiveUser());
-            SwapToProfilePage(prof);
-        }
-
-        private void SelectProfile(object obj)
-        {
-            SwapToProfilePage(obj as Profile);
-        }
-        public override void OnNavigatedFrom(INavigationParameters parameters)
-        {
-            //Profiles = ProfilesRepository.GetUserContacts(authUser.ID).ToList();
-        }
-
-        public override async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            base.OnNavigatedTo(parameters);
-            //if (!Autorizator.Autorizeted())
-            //{
-            //    await NavigationService.NavigateAsync($"/{nameof(SignInView)}");
-            //}
-            // else
-            //{               
-            //if (authUser == null)//проверяется был ли установлен активный пользователь ранее
-            //    authUser = parameters.GetValue<User>("User") as User;
-            //Profiles = ProfilesRepository.GetUserContacts(authUser.ID).ToList();
-            if (Autorizator.Autorizeted())
-            {
-                var query = from p in Repository.GetItems<Profile>()
-                            where p.UserID == Autorizator.GetActiveUser()
-                            select p;
-                Profiles = query.ToList();
-                // Profiles = ProfilesRepository.GetUserContacts(Autorizator.GetActiveUser()).ToList(); }
-            }
-            //}
-        }
-
-        private async void SwapToProfilePage(IProfile profile)
-        {
-            var navParam = new NavigationParameters();
-            navParam.Add("Profile", profile);
-            await NavigationService.NavigateAsync($"{nameof(AddEditProfileBook)}", navParam);
+            _userDialogs.ActionSheet(config);
         }
 
         private void DeleteProfile(object obj)
@@ -163,37 +118,57 @@ namespace ProfileBook.ViewModels
                 {
                     if (b)
                     {
-                        Repository.DeleteItem<Profile>(item);
-                        //Repository.DeleteContact(item.ID);
-                        //Profiles = ProfilesRepository.GetUserContacts(authUser.ID).ToList();
-                        var query = from p in Repository.GetItems<Profile>()
-                                    where p.UserID == Autorizator.GetActiveUser()
-                                    select p;
-                        Profiles = query.ToList();
+                        _profileService.DeleteProfile(item);
+                        SetProfiles();
                     }
                 });
-                UserDialogs.Instance.Confirm(config);
+                _userDialogs.Confirm(config);
             }
-
+        }
+        public void ShowImage(object sender, SelectedItemChangedEventArgs e)
+        {
         }
         private async void LogOut(object obj)
         {
-            Autorizator.LogOut();
-            //  await NavigationService.GoBackToRootAsync();
+            _autorizationService.LogOut();            
             await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}");
         }
 
-        public void ShowImage(object sender, SelectedItemChangedEventArgs e)
-        { 
-        
+        #endregion
+
+        #region --Oveerides--
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {            
         }
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            
+            if (_autorizationService.Autorizeted())
+            {
+                SetProfiles();                
+            }          
+        }
+        #endregion
+
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
             Console.WriteLine("Overrided Inintialize mainlist");
         }
 
-
+        #region --Private helpers--
+        private async void SwapToProfilePage(IProfile profile)
+        {
+            var navParam = new NavigationParameters();
+            navParam.Add("Profile", profile);
+            await NavigationService.NavigateAsync($"{nameof(AddEditProfileBook)}", navParam);
+        }
+        private void SetProfiles()
+        {
+            Profiles= _profileService.GetProfiles(_autorizationService.GetActiveUser());
+        }
+        #endregion
     }
 }
 

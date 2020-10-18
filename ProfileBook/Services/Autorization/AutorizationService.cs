@@ -7,26 +7,29 @@ namespace ProfileBook.Services.Autorization
 {
     public class AutorizationService : IAutorization
     {
-        readonly string key = "Id";
-
-        public AutorizationService()
+        
+        private readonly ISettingsManager Manager;
+       
+        public AutorizationService(ISettingsManager manager)
         {
+            Manager = manager;
         }
         public bool Autorizeted()
         {
-            return (GetActiveUser() > -1);
+            return (Manager.AutorizatedUserId > -1);
         }
         public void LogOut()
         {
-            CrossSettings.Current.AddOrUpdateValue(key, -1);
+            Manager.AutorizatedUserId = -1;
         }
+
         public int GetActiveUser()
         {
-            return CrossSettings.Current.GetValueOrDefault(key, -1);
+            return Manager.AutorizatedUserId;
         }
-        public void SetActiveUser(int id)
-        {
-            CrossSettings.Current.AddOrUpdateValue(key, id);
-        }
+        //public void SetActiveUser(int id)
+        //{
+        //    Manager.AutorizatedUserId = id;
+        //}
     }
 }
