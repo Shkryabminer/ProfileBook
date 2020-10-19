@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProfileBook.Converters;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    Title="MainList">
+    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
+    Title="{localization:Translate MainListTitle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsButtonCommand}" Icon="ic_settings.png" />
         <ToolbarItem Command="{Binding LogOutCommand}" Icon="ic_exit_to_app.png" />
@@ -33,11 +34,11 @@
                             <MenuItem
                                 Command="{Binding BindingContext.SelectProfileCommand, Source={x:Reference profilesListView}}"
                                 CommandParameter="{Binding .}"
-                                Text="EDIT" />
+                                Text="{localization:Translate MainListMenuItemEdit}" />
                             <MenuItem
                                 Command="{Binding BindingContext.DeleteProfileCommand, Source={x:Reference profilesListView}}"
                                 CommandParameter="{Binding .}"
-                                Text="DELETE" />
+                                Text="{localization:Translate MainListMenuItemDelete}" />
                         </ViewCell.ContextActions>
                         <ViewCell.View>
                             <StackLayout Orientation="Horizontal" Padding="5,10">
@@ -66,7 +67,7 @@
             FontSize="40"
             HorizontalOptions="Center"
             IsVisible="{Binding LabelIsVisible}"
-            Text="No profiles added"
+            Text="{localization:Translate MainListNoProfAddedLable}"
             VerticalOptions="Center" />
         <Button
             Margin="40"
@@ -79,7 +80,7 @@
             FontAttributes="Bold"
             HeightRequest="{StaticResource Key=ButtonSize}"
             HorizontalOptions="End"
-            Text="+"
+            Text="{localization:Translate MainListAddProffButton}"
             TextColor="White"
             VerticalOptions="End"
             WidthRequest="{StaticResource Key=ButtonSize}" />

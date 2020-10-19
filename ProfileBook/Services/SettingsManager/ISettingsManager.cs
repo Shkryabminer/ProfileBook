@@ -11,6 +11,7 @@ namespace ProfileBook.Services
 
        int AutorizatedUserId { get; set; }
        int SelectedSortMethode { get; set; }
+        string LanguageSource { get; set; }
         
 
     }

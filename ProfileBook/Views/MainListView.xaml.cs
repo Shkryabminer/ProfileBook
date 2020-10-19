@@ -16,7 +16,7 @@ namespace ProfileBook.Views
             }
         }
 
-        private void profilesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void ProfilesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
         }

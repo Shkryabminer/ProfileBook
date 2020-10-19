@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
+using ProfileBook.Translate;
 
 namespace ProfileBook.ViewModels
 {
@@ -13,6 +14,7 @@ namespace ProfileBook.ViewModels
     {
         #region --Properties--
         private bool _sort1, _sort2, _sort3;
+        private bool _enabledLanguageRus, _enabledLanguageEn;
         public bool Sort1
         {
             get { return _sort1; }
@@ -22,8 +24,7 @@ namespace ProfileBook.ViewModels
                 if (Sort1)
                 {
                     Sort2 = false; Sort3 = false;
-
-                    SetOption();
+                    SetSortOption();
                 }
             }
         }
@@ -36,7 +37,7 @@ namespace ProfileBook.ViewModels
                 if (Sort2)
                 {
                     Sort1 = false; Sort3 = false;
-                    SetOption();
+                    SetSortOption();
                 }
 
             }
@@ -50,21 +51,57 @@ namespace ProfileBook.ViewModels
                 if (Sort3)
                 {
                     Sort1 = false; Sort2 = false;
-                    SetOption();
+                    SetSortOption();
                 }
             }
         }
+        public bool EnabledLanguageRus {
+            get { return _enabledLanguageRus; }
+            set {
+                
+                SetProperty(ref _enabledLanguageRus, value);
+                if (EnabledLanguageRus)
+                {
+                    EnabledLanguageEN = false;
+                    _settingsManager.LanguageSource = Constants._russian;
+                    
+                }
+            }
+        }
+        public bool EnabledLanguageEN
+        {
+            get { return _enabledLanguageEn; }
+            set {               
+                SetProperty(ref _enabledLanguageEn, value);
+                if (EnabledLanguageEN)
+                {
+                    EnabledLanguageRus = false;
+                    _settingsManager.LanguageSource = Constants._defaultlanguage;
+                    
+                }
+            }
+        }
+
         private readonly ISettingsManager _settingsManager;
 
         #endregion
         public SettingsViewViewModel(INavigationService navigation, ISettingsManager manager) : base(navigation)
         {
             _settingsManager = manager;
-            SetSavedOptions();
-
+            SetSavedSortOptions();
+            SetSavedLanguageOption();
         }
+
+        #region --Overrides--
+        public override void OnNavigatedFrom(INavigationParameters parameters)
+        {
+            base.OnNavigatedFrom(parameters);
+            SetSavedLanguageOption();
+        }
+        #endregion
+
         #region --Privat helpers--
-        private void SetOption()
+        private void SetSortOption()
         {
             if (Sort1)
             {
@@ -82,7 +119,7 @@ namespace ProfileBook.ViewModels
             if (!Sort1 && !Sort2 && !Sort3)
                 _settingsManager.SelectedSortMethode = 0;
         }
-        private void SetSavedOptions()
+        private void SetSavedSortOptions()
         {
             if (_settingsManager.SelectedSortMethode == 0)
                 Sort1 = true;
@@ -90,6 +127,13 @@ namespace ProfileBook.ViewModels
                 Sort2 = true;
             else if (_settingsManager.SelectedSortMethode == 2)
                 Sort3 = true;
+        }
+        
+        private void SetSavedLanguageOption()
+        {
+            if (_settingsManager.LanguageSource == Constants._defaultlanguage)
+                EnabledLanguageEN = true;
+            else EnabledLanguageRus = true;
         }
         #endregion
 

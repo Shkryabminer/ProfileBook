@@ -17,6 +17,7 @@ using Acr.UserDialogs;
 using ProfileBook.Services.ProfileService;
 using Plugin.Media.Abstractions;
 using Plugin.Media;
+using ProfileBook.Translate;
 
 namespace ProfileBook
 {
@@ -66,6 +67,7 @@ namespace ProfileBook
             containerRegistry.Register<IAutorization, AutorizationService>();
             containerRegistry.Register<IAuthentificationService, AutentificationService>();
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();
+            containerRegistry.RegisterInstance<IMarkupExtension>(Container.Resolve<TranslateExtension>());
         }
         #region --Private helpers--
         private async Task InitNavigationAsync()

@@ -4,43 +4,73 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    Title="Settings">
+    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
+    Title="{localization:Translate SetViewTitle}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Check">Blue</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView Padding="20">
-        <Frame
-            BorderColor="Blue"
+    <ScrollView Padding="20" VerticalOptions="Start">
+        <StackLayout Orientation="Vertical" Spacing="10">
+            <Frame BorderColor="Blue"
             CornerRadius="20"
             VerticalOptions="StartAndExpand">
+                
             <StackLayout Orientation="Vertical">
-                <Label FontSize="20" Text="Упорядочить список профайлов" />
+                <Label FontSize="20" Text="{localization:Translate SetViewSortLable}" />
                 <StackLayout Orientation="Horizontal">
                     <CheckBox
                         IsChecked="{Binding Sort1}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                    <Label Text="упорядочить по дате создания" VerticalOptions="CenterAndExpand" />
+                    <Label Text="{localization:Translate SetViewSortByDateLable}"
+                           VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <CheckBox
                         IsChecked="{Binding Sort2}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                    <Label Text="упорядочить по имени" VerticalOptions="CenterAndExpand" />
+                    <Label Text="{localization:Translate SetViewSortByNameLable}" 
+                           VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <CheckBox
                         IsChecked="{Binding Sort3}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                    <Label Text="упорядочить по нику" VerticalOptions="CenterAndExpand" />
+                    <Label Text="{localization:Translate SetViewSortByNickNameLable}" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
-
-
             </StackLayout>
         </Frame>
+      
+            <Frame BorderColor="Blue"
+            CornerRadius="20"
+                   VerticalOptions="Start">
+                <StackLayout Orientation="Vertical">
+                    <Label FontSize="20" Text="{localization:Translate SetViewLanguageLable}" />
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox
+                        IsChecked="{Binding EnabledLanguageRus}"
+                        VerticalOptions="CenterAndExpand"
+                        Color="{StaticResource Check}" />
+                        <Label Text="{localization:Translate SetViewLanguageRusLable}"
+                           VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox
+                        IsChecked="{Binding EnabledLanguageEN}"
+                        VerticalOptions="CenterAndExpand"
+                        Color="{StaticResource Check}" />
+                        
+                        <Label Text="{localization:Translate SetViewLanguageEnLable}" 
+                           VerticalOptions="CenterAndExpand" />
+                    </StackLayout>                   
+                </StackLayout>
+            </Frame>
+
+
+        </StackLayout>
     </ScrollView>
 </ContentPage>

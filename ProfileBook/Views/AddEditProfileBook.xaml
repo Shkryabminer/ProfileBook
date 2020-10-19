@@ -3,7 +3,10 @@
     x:Class="ProfileBook.Views.AddEditProfileBook"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com">
+    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{localization:Translate EditListTitle}">
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem
             x:Name="SaveButton"
@@ -33,22 +36,22 @@
                 <Label
                     Margin="5,0,0,0"
                     FontSize="12"
-                    Text="NickName" />
+                    Text="{localization:Translate EditListNickLable}" />
                 <Entry
                     Margin="0,3,0,0"
                     FontSize="18"
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Start"
-                    Placeholder="NickName"
+                    Placeholder="{localization:Translate EditListNickPlace}"
                     Text="{Binding CurrentProfile.FirstName}"
                     TextColor="Blue" />
                 <Label
                     Margin="5,20,0,0"
                     FontSize="12"
-                    Text="Name" />
+                    Text="{localization:Translate EditListNameLable}" />
                 <Entry
                     x:Name="entrySecond"
-                    Placeholder="Name"
+                    Placeholder="{localization:Translate EditListNamePplace}"
                     Text="{Binding CurrentProfile.SecondName}" />
             </StackLayout>
 
@@ -58,7 +61,7 @@
                 VerticalOptions="FillAndExpand">
                 <Label
                     HorizontalOptions="Start"
-                    Text="Description"
+                    Text="{localization:Translate EditListDescriptLable}"
                     VerticalOptions="Start" />
                 <Editor
                     Margin="0,40,0,0"

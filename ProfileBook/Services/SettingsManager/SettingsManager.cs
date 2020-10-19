@@ -26,6 +26,11 @@ namespace ProfileBook.Services
             get => SetPlugin.GetValueOrDefault(nameof(SelectedSortMethode), 0);
             set => SetPlugin.AddOrUpdateValue(nameof(SelectedSortMethode), value);
         }
+        public string LanguageSource
+        {
+            get => SetPlugin.GetValueOrDefault(nameof(LanguageSource), Constants._defaultlanguage); 
+            set => SetPlugin.AddOrUpdateValue(nameof(LanguageSource),value);
+        }
 
         #endregion
 

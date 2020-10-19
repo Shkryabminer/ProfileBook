@@ -3,8 +3,9 @@
     x:Class="ProfileBook.Views.SignInView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    Title="UsersSignIN">
+    Title="{localization:Translate SignInTitle}">
 
     <StackLayout
         Padding="20"
@@ -19,12 +20,12 @@
                 FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
-                Placeholder="Login"
+                Placeholder="{localization:Translate SignInLoginPlaceHolder}"
                 Text="{Binding Login}"
                 TextColor="Blue" />
             <Entry
                 IsPassword="True"
-                Placeholder="Password"
+                Placeholder="{localization:Translate SignInPasPlaceHolder}"
                 Text="{Binding Password}" />
         </StackLayout>
 
@@ -39,7 +40,7 @@
                 Command="{Binding ToMainListViewCommand}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding SignInIsActiv}"
-                Text="SIGN IN"
+                Text="{localization:Translate SignInBtnLogin}"
                 TextColor="AliceBlue"
                 WidthRequest="100" />
 
@@ -49,7 +50,7 @@
                 FontSize="20"
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
-                Text="SignUp"
+                Text="{localization:TranslateExtension SignInLabelSignUp}"
                 TextColor="Blue">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToSignUpViewCommand}" CommandParameter="lblSignUp" />
