@@ -22,10 +22,9 @@ namespace ProfileBook.ViewModels
     public class MainListViewViewModel : BaseViewModel
     {
         #region --Properties--
-        private IUser authUser;
+     
         private readonly IUserDialogs _userDialogs;
-        private readonly IAutorization _autorizationService;
-        
+        private readonly IAutorization _autorizationService;        
         private readonly IProfileService _profileService;
         private List<Profile> _profiles;
         public List<Profile> Profiles
@@ -57,6 +56,7 @@ namespace ProfileBook.ViewModels
             get => SelectedProfile.Date.ToLongTimeString();
         }
         #endregion
+
         #region Commands
         private ICommand _selectProfileCommand;
         public ICommand SelectProfileCommand => _selectProfileCommand ?? (_selectProfileCommand = new Command<object>(SelectProfile));
@@ -76,12 +76,11 @@ namespace ProfileBook.ViewModels
         ICommand _showImageCommand;
         public ICommand ShowImageCommand => _showImageCommand ?? (_showImageCommand = new Command<object>(ShowImage));
 
+        private ICommand _buttonImageCommand;
+        public ICommand ButtonImageCommand => _buttonImageCommand ?? (_buttonImageCommand = new Command(OnButtonImage));      
+
         #endregion
-        //public MainListViewViewModel(INavigationService navigationService, IProfileRepository profilesRepository, IAutorization autorization) : base(navigationService)
-        //{
-        //    ProfilesRepository = profilesRepository;
-        //    _autorizationService = autorization;
-        //}
+       
         public MainListViewViewModel(
             INavigationService navigationService,            
             IAutorization autorization, 
@@ -96,6 +95,14 @@ namespace ProfileBook.ViewModels
         private  void SelectProfile(object obj)
         {
             SwapToProfilePage(obj as Profile);
+        }
+        private async void OnButtonImage(object obj)
+        {
+            var prof = obj as Profile;
+            var image = prof.Picture;
+            var galeryIcon = await BitmapLoader.Current.LoadFromResource(image, 300f, 300f);
+             _userDialogs.ShowImage(galeryIcon, null,5000);
+            
         }
         public  void AddNewProfile(object obj)
         {             

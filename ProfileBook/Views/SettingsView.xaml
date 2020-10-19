@@ -3,40 +3,44 @@
     x:Class="ProfileBook.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com"    
+    xmlns:prism="http://prismlibrary.com"
     Title="Settings">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Check">Blue</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ScrollView Padding="20">
-        <Frame VerticalOptions="StartAndExpand" CornerRadius="20"
-               BorderColor="Aqua" 
-               >
+        <Frame
+            BorderColor="Blue"
+            CornerRadius="20"
+            VerticalOptions="StartAndExpand">
             <StackLayout Orientation="Vertical">
-                <Label Text="Упорядочить список профайлов" FontSize="20"/>
+                <Label FontSize="20" Text="Упорядочить список профайлов" />
                 <StackLayout Orientation="Horizontal">
-                    <RadioButton
-                    x:Name="sort1"
-                    GroupName="sort"
-                    IsChecked="{Binding Sort1}"
-                    VerticalOptions="CenterAndExpand" />
+                    <CheckBox
+                        IsChecked="{Binding Sort1}"
+                        VerticalOptions="CenterAndExpand"
+                        Color="{StaticResource Check}" />
                     <Label Text="упорядочить по дате создания" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <RadioButton
-                    x:Name="sort2"
+                    <CheckBox
                         IsChecked="{Binding Sort2}"
-                    GroupName="sort"
-                    VerticalOptions="CenterAndExpand" />
+                        VerticalOptions="CenterAndExpand"
+                        Color="{StaticResource Check}" />
                     <Label Text="упорядочить по имени" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <RadioButton
-                    x:Name="sort3"
-                    GroupName="sort"
-                    IsChecked="{Binding Sort3}"
-                    VerticalOptions="CenterAndExpand" />
+                    <CheckBox
+                        IsChecked="{Binding Sort3}"
+                        VerticalOptions="CenterAndExpand"
+                        Color="{StaticResource Check}" />
                     <Label Text="упорядочить по нику" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
-           
-        </StackLayout>
+
+
+            </StackLayout>
         </Frame>
     </ScrollView>
 </ContentPage>

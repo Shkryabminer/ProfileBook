@@ -15,6 +15,8 @@ using Plugin.Settings.Abstractions;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using ProfileBook.Services.ProfileService;
+using Plugin.Media.Abstractions;
+using Plugin.Media;
 
 namespace ProfileBook
 {
@@ -54,6 +56,7 @@ namespace ProfileBook
             //Pluggins
             containerRegistry.RegisterInstance<ISettings>(CrossSettings.Current);
             containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
+            containerRegistry.RegisterInstance<IMedia>(CrossMedia.Current);
 
             //Services
             

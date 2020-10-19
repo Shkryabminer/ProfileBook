@@ -19,6 +19,7 @@
     </ContentPage.Resources>
     <Grid>
         <ListView
+            SeparatorVisibility="None"
             x:Name="profilesListView"
             HasUnevenRows="True"
             ItemsSource="{Binding Path=Profiles}"
@@ -28,7 +29,6 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-
                         <ViewCell.ContextActions>
                             <MenuItem
                                 Command="{Binding BindingContext.SelectProfileCommand, Source={x:Reference profilesListView}}"
@@ -40,10 +40,11 @@
                                 Text="DELETE" />
                         </ViewCell.ContextActions>
                         <ViewCell.View>
+                            <StackLayout Orientation="Horizontal" Padding="5,10">
 
-                            <StackLayout Orientation="Horizontal">
-
-                                <Image
+                                <ImageButton
+                                    Command="{Binding BindingContext.ButtonImageCommand, Source={x:Reference profilesListView}}"
+                                    CommandParameter="{Binding .}"
                                     HeightRequest="40"
                                     Source="{Binding Picture}"
                                     WidthRequest="100" />

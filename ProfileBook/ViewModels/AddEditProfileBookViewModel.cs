@@ -20,6 +20,8 @@ namespace ProfileBook.ViewModels
     public class AddEditProfileBookViewModel : BaseViewModel
     {
         #region --Properties--
+        private readonly IMedia _mediaPlugin;
+        private readonly IUserDialogs _userDialogs;
         private readonly IProfileService _profileService;
        private Profile _currentProfile;
         bool _saveIsActive;
@@ -55,30 +57,46 @@ namespace ProfileBook.ViewModels
         //{
         //    ProfilesRepository = profilesRepository;
         //}
-        public AddEditProfileBookViewModel(INavigationService navigationServcie,
+        public AddEditProfileBookViewModel(
+            INavigationService navigationServcie,
             IRepository repository,
-            IProfileService profileService) : base(navigationServcie)
+            IProfileService profileService,
+            IUserDialogs userDialogs,
+            IMedia media) :base(navigationServcie)
         {
+            _mediaPlugin = media;
+            _userDialogs = userDialogs;
             _profileService = profileService;
             Repository = repository;
         }
-
-
+        #region --Overrides--
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            CurrentProfile = parameters.GetValue<IProfile>("Profile") as Models.Profile;
+            CurrentProfile = parameters.GetValue<IProfile>("Profile") as Profile;
             base.OnNavigatedTo(parameters);
         }
-       private  async void SaveProfile()
-        {
-            CurrentProfile.Date = DateTime.Now;
-            _profileService.SaveOrUpdateProfile(CurrentProfile);
-            await NavigationService.GoBackAsync();
+        #endregion
+
+        #region --Command handlers--
+
+        private async void SaveProfile()
+        {if (CheckFields())
+            {
+                CurrentProfile.Date = DateTime.Now;
+                _profileService.SaveOrUpdateProfile(CurrentProfile);
+                await NavigationService.GoBackAsync();
+            }    
+        else
+            {
+                await _userDialogs.AlertAsync("Поля Name и NickName должны быть заполнены");
+
+            }
         }
+
         private async void  ImageTap(object obj)
         {
             ActionSheetConfig config = new ActionSheetConfig();
@@ -88,31 +106,40 @@ namespace ProfileBook.ViewModels
             config.Add("Take Picture From Galery", SetPictureFromGalery, galeryIcon);
             config.Add("Take Picture From Camera", SetFromCamera, photoIcon);
             config.SetCancel(null, null, null); 
-            UserDialogs.Instance.ActionSheet(config);
+            _userDialogs.ActionSheet(config);
         }
+        #endregion
+      
+        #region --Private helpers--
         private async void SetPictureFromGalery()
         {
             if (CrossMedia.Current.IsPickPhotoSupported)
             {
-                MediaFile file = await CrossMedia.Current.PickPhotoAsync();
+                MediaFile file = await _mediaPlugin.PickPhotoAsync();
                 CurrentProfile.Picture = file.Path;
                 RaisePropertyChanged(nameof(CurrentProfile));
             }
         }
-       private async void SetFromCamera()
+        
+        private async void SetFromCamera()
         {
-            if (CrossMedia.Current.IsTakePhotoSupported && CrossMedia.Current.IsCameraAvailable)
+            if (_mediaPlugin.IsTakePhotoSupported && _mediaPlugin.IsCameraAvailable)
             {
                 var options = new StoreCameraMediaOptions();
                 options.SaveToAlbum = true;
-                MediaFile file = await CrossMedia.Current.TakePhotoAsync(options);
+                MediaFile file = await _mediaPlugin.TakePhotoAsync(options);
                 if (file == null)
                     return;
                 CurrentProfile.Picture = file.Path;
                 RaisePropertyChanged(nameof(CurrentProfile));
             }
         }
-        
+        private bool CheckFields()
+        {
+            return (!string.IsNullOrEmpty(CurrentProfile.FirstName) && !string.IsNullOrEmpty(CurrentProfile.SecondName));
+        }
+        #endregion
+
 
 
     }
