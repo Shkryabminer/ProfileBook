@@ -135,6 +135,9 @@
   <data name="EditListTitle" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="EditPrifileError" xml:space="preserve">
+    <value>Name and NickName must be fiiled</value>
+  </data>
   <data name="MainListAddProffButton" xml:space="preserve">
     <value>+</value>
   </data>

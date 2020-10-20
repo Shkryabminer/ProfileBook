@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 using ProfileBook.Translate;
+using ProfileBook.Resources;
 
 namespace ProfileBook.ViewModels
 {
@@ -64,7 +65,8 @@ namespace ProfileBook.ViewModels
                 {
                     EnabledLanguageEN = false;
                     _settingsManager.LanguageSource = Constants._russian;
-                    
+                    Resource.Culture = new System.Globalization.CultureInfo("ru");
+
                 }
             }
         }
@@ -77,6 +79,7 @@ namespace ProfileBook.ViewModels
                 {
                     EnabledLanguageRus = false;
                     _settingsManager.LanguageSource = Constants._defaultlanguage;
+                    Resource.Culture = new System.Globalization.CultureInfo("en");
                     
                 }
             }
@@ -132,7 +135,10 @@ namespace ProfileBook.ViewModels
         private void SetSavedLanguageOption()
         {
             if (_settingsManager.LanguageSource == Constants._defaultlanguage)
+            {
                 EnabledLanguageEN = true;
+
+            }
             else EnabledLanguageRus = true;
         }
         #endregion

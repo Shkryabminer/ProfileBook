@@ -5,10 +5,37 @@ using System.Linq;
 using Foundation;
 using Prism;
 using Prism.Ioc;
+using ProfileBook.Localization;
 using UIKit;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(ProfileBook.iOS.Localize))]
 namespace ProfileBook.iOS
 {
+   
+     public class Localize : ILocalize
+    {
+        public System.Globalization.CultureInfo GetCurrentCultureInfo()
+        {
+            var netLanguage = "en";
+            var prefLanguage = "en-US";
+            if (NSLocale.PreferredLanguages.Length > 0)
+            {
+                var pref = NSLocale.PreferredLanguages[0];
+                netLanguage = pref.Replace("_", "-"); // заменяет pt_BR на pt-BR
+            }
+            System.Globalization.CultureInfo ci = null;
+            try
+            {
+                ci = new System.Globalization.CultureInfo(netLanguage);
+            }
+            catch
+            {
+                ci = new System.Globalization.CultureInfo(prefLanguage);
+            }
+            return ci;
+        }
+    }
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
@@ -37,4 +64,6 @@ namespace ProfileBook.iOS
            
         }
     }
+    
+   
 }

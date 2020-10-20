@@ -3,9 +3,9 @@
     x:Class="ProfileBook.Views.AddEditProfileBook"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
+    xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    Title="{localization:Translate EditListTitle}">
+    Title="{x:Static localization:Resource.EditListTitle}">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem
@@ -36,22 +36,22 @@
                 <Label
                     Margin="5,0,0,0"
                     FontSize="12"
-                    Text="{localization:Translate EditListNickLable}" />
+                    Text="{x:Static localization:Resource.EditListNickLable}" />
                 <Entry
                     Margin="0,3,0,0"
                     FontSize="18"
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Start"
-                    Placeholder="{localization:Translate EditListNickPlace}"
+                    Placeholder="{x:Static localization:Resource.EditListNickPlace}"
                     Text="{Binding CurrentProfile.FirstName}"
                     TextColor="Blue" />
                 <Label
                     Margin="5,20,0,0"
                     FontSize="12"
-                    Text="{localization:Translate EditListNameLable}" />
+                    Text="{x:Static localization:Resource.EditListNameLable}" />
                 <Entry
                     x:Name="entrySecond"
-                    Placeholder="{localization:Translate EditListNamePplace}"
+                    Placeholder="{x:Static localization:Resource.EditListNamePplace}"
                     Text="{Binding CurrentProfile.SecondName}" />
             </StackLayout>
 
@@ -61,7 +61,7 @@
                 VerticalOptions="FillAndExpand">
                 <Label
                     HorizontalOptions="Start"
-                    Text="{localization:Translate EditListDescriptLable}"
+                    Text="{x:Static localization:Resource.EditListDescriptLable}"
                     VerticalOptions="Start" />
                 <Editor
                     Margin="0,40,0,0"

@@ -10,10 +10,22 @@ using Prism;
 using Prism.Ioc;
 using Acr.UserDialogs;
 using Plugin.Media;
+using Xamarin.Forms;
+using ProfileBook.Localization;
 
-
+[assembly: Dependency(typeof(ProfileBook.Droid.Localize))]
 namespace ProfileBook.Droid
 {
+    public class Localize : ILocalize
+    {
+        public System.Globalization.CultureInfo GetCurrentCultureInfo()
+        {
+            var androidLocale = Java.Util.Locale.Default;
+            var netLanguage = androidLocale.ToString().Replace("_", "-");
+            return new System.Globalization.CultureInfo(netLanguage);
+        }
+    }
+
     [Activity(Label = "ProfileBook", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

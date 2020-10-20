@@ -161,19 +161,21 @@ namespace ProfileBook.ViewModels
         }
         public override  void OnNavigatedTo(INavigationParameters parameters)
         {
+
             base.OnNavigatedTo(parameters);
             
             if (_autorizationService.Autorizeted())
             {
                 SetProfiles();                
-            }          
-        }
+            }
+           // OnAppearing();
+           
+       }
         #endregion
 
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            Console.WriteLine("Overrided Inintialize mainlist");
         }
 
         #region --Private helpers--

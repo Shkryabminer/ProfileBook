@@ -18,6 +18,8 @@ using ProfileBook.Services.ProfileService;
 using Plugin.Media.Abstractions;
 using Plugin.Media;
 using ProfileBook.Translate;
+using ProfileBook.Localization;
+using ProfileBook.Resources;
 
 namespace ProfileBook
 {
@@ -32,6 +34,10 @@ namespace ProfileBook
         public App()
         {
             InitializeComponent();
+           
+                //Resource.Culture = DependencyService.Get<ILocalize>()
+                //                    .GetCurrentCultureInfo();
+            
         }
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
@@ -68,6 +74,7 @@ namespace ProfileBook
             containerRegistry.Register<IAuthentificationService, AutentificationService>();
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();
             containerRegistry.RegisterInstance<IMarkupExtension>(Container.Resolve<TranslateExtension>());
+            containerRegistry.RegisterInstance<ITRanslate>(Container.Resolve<AllertErrorTranslator>());
         }
         #region --Private helpers--
         private async Task InitNavigationAsync()

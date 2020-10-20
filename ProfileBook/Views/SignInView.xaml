@@ -3,9 +3,9 @@
     x:Class="ProfileBook.Views.SignInView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
+    xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    Title="{localization:Translate SignInTitle}">
+    Title="{x:Static localization:Resource.SignInTitle}">
 
     <StackLayout
         Padding="20"
@@ -20,12 +20,12 @@
                 FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
-                Placeholder="{localization:Translate SignInLoginPlaceHolder}"
+                Placeholder="{x:Static localization:Resource.SignInLoginPlaceHolder}"
                 Text="{Binding Login}"
                 TextColor="Blue" />
             <Entry
                 IsPassword="True"
-                Placeholder="{localization:Translate SignInPasPlaceHolder}"
+                Placeholder="{x:Static localization:Resource.SignInPasPlaceHolder}"
                 Text="{Binding Password}" />
         </StackLayout>
 
@@ -40,7 +40,7 @@
                 Command="{Binding ToMainListViewCommand}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding SignInIsActiv}"
-                Text="{localization:Translate SignInBtnLogin}"
+                Text="{x:Static localization:Resource.SignInBtnLogin}"
                 TextColor="AliceBlue"
                 WidthRequest="100" />
 
@@ -50,7 +50,7 @@
                 FontSize="20"
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
-                Text="{localization:TranslateExtension SignInLabelSignUp}"
+                Text="{x:Static localization:Resource.SignInLabelSignUp}"
                 TextColor="Blue">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToSignUpViewCommand}" CommandParameter="lblSignUp" />

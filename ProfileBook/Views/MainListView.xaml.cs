@@ -20,5 +20,20 @@ namespace ProfileBook.Views
         {
 
         }
+        protected override void OnAppearing()
+        {
+            //InitializeComponent();
+            base.OnAppearing();
+            if (BindingContext is IAppearAware appear)
+                appear.OnAppearing();
+         
+
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (BindingContext is IAppearAware appear)
+                appear.OnDisAppearing();
+        }
     }
 }

@@ -5,8 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProfileBook.Converters;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
-    Title="{localization:Translate MainListTitle}">
+    xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
+    Title="{x:Static localization:Resource.MainListTitle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsButtonCommand}" Icon="ic_settings.png" />
         <ToolbarItem Command="{Binding LogOutCommand}" Icon="ic_exit_to_app.png" />
@@ -34,11 +34,11 @@
                             <MenuItem
                                 Command="{Binding BindingContext.SelectProfileCommand, Source={x:Reference profilesListView}}"
                                 CommandParameter="{Binding .}"
-                                Text="{localization:Translate MainListMenuItemEdit}" />
+                                Text="{x:Static localization:Resource.MainListMenuItemEdit}" />
                             <MenuItem
                                 Command="{Binding BindingContext.DeleteProfileCommand, Source={x:Reference profilesListView}}"
                                 CommandParameter="{Binding .}"
-                                Text="{localization:Translate MainListMenuItemDelete}" />
+                                Text="{x:Static localization:Resource.MainListMenuItemDelete}" />
                         </ViewCell.ContextActions>
                         <ViewCell.View>
                             <StackLayout Orientation="Horizontal" Padding="5,10">
@@ -67,7 +67,7 @@
             FontSize="40"
             HorizontalOptions="Center"
             IsVisible="{Binding LabelIsVisible}"
-            Text="{localization:Translate MainListNoProfAddedLable}"
+            Text="{x:Static localization:Resource.MainListNoProfAddedLable}"
             VerticalOptions="Center" />
         <Button
             Margin="40"
@@ -80,7 +80,7 @@
             FontAttributes="Bold"
             HeightRequest="{StaticResource Key=ButtonSize}"
             HorizontalOptions="End"
-            Text="{localization:Translate MainListAddProffButton}"
+            Text="{x:Static localization:Resource.MainListAddProffButton}"
             TextColor="White"
             VerticalOptions="End"
             WidthRequest="{StaticResource Key=ButtonSize}" />

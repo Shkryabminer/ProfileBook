@@ -8,6 +8,7 @@ using Xamarin.Forms.Xaml;
 using System.Globalization;
 using ProfileBook.Services;
 using System.ComponentModel;
+using ProfileBook.Localization;
 
 namespace ProfileBook.Translate
 {
@@ -21,20 +22,21 @@ namespace ProfileBook.Translate
         public string Text { get; set; }
         #endregion
         public TranslateExtension()
-        { 
-        
+        {
+            //ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
             ci = new CultureInfo(1033);
         }
         public TranslateExtension(ISettingsManager manager):this()
         {
             _settingsManger = manager;
-            _settingsManger.LanguageSource = Constants._defaultlanguage;
-             ci = new CultureInfo(1033);
+           // ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
+            //ci = new CultureInfo(1033);
         }
 
         #region --Implementation IMarkUpExtension--
         public object ProvideValue(IServiceProvider serviceProvider)
         {
+            var tmp = serviceProvider;
             if (Text == null)
                 return "";
 
@@ -50,5 +52,4 @@ namespace ProfileBook.Translate
             return translation;
         }
         #endregion
-    }
-}
+    }}

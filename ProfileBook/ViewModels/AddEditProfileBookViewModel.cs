@@ -7,19 +7,20 @@ using Prism.Navigation;
 using ProfileBook.Models;
 using ProfileBook.Services;
 using ProfileBook.Services.ProfileService;
+using ProfileBook.Translate;
 using Splat;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
-
-
+using Xamarin.Forms.Xaml;
 
 namespace ProfileBook.ViewModels
 {
     public class AddEditProfileBookViewModel : BaseViewModel
     {
         #region --Properties--
+        private ITRanslate _allertErrorTranslator;
         private readonly IMedia _mediaPlugin;
         private readonly IUserDialogs _userDialogs;
         private readonly IProfileService _profileService;
@@ -51,23 +52,24 @@ namespace ProfileBook.ViewModels
         #endregion
 
 
-        public IRepository Repository { get; private set; }
+      //  public IRepository Repository { get; private set; }
         //public IProfileRepository ProfilesRepository { get; private set; } _repository
         //public AddEditProfileBookViewModel(INavigationService navigationServcie, IProfileRepository profilesRepository) : base(navigationServcie)
         //{
         //    ProfilesRepository = profilesRepository;
         //}
         public AddEditProfileBookViewModel(
-            INavigationService navigationServcie,
-            IRepository repository,
-            IProfileService profileService,
-            IUserDialogs userDialogs,
-            IMedia media) :base(navigationServcie)
+              INavigationService navigationServcie,
+             ITRanslate extension,
+             IProfileService profileService,
+             IUserDialogs userDialogs,
+             IMedia media) :base(navigationServcie)
         {
+            _allertErrorTranslator = extension;
             _mediaPlugin = media;
             _userDialogs = userDialogs;
             _profileService = profileService;
-            Repository = repository;
+         ///   Repository = repository;
         }
         #region --Overrides--
         public override void OnNavigatedFrom(INavigationParameters parameters)
@@ -92,8 +94,7 @@ namespace ProfileBook.ViewModels
             }    
         else
             {
-                await _userDialogs.AlertAsync("Поля Name и NickName должны быть заполнены");
-
+                await _userDialogs.AlertAsync(GetTranslate());
             }
         }
 
@@ -137,6 +138,10 @@ namespace ProfileBook.ViewModels
         private bool CheckFields()
         {
             return (!string.IsNullOrEmpty(CurrentProfile.FirstName) && !string.IsNullOrEmpty(CurrentProfile.SecondName));
+        }
+        private string GetTranslate()
+        {
+          return  _allertErrorTranslator.GetTranslate("EditPrifileError");
         }
         #endregion
 

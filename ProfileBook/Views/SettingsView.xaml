@@ -4,8 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
-    Title="{localization:Translate SetViewTitle}">
+    xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
+    Title="{x:Static localization:Resource.SetViewTitle}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Check">Blue</Color>
@@ -18,13 +18,13 @@
             VerticalOptions="StartAndExpand">
                 
             <StackLayout Orientation="Vertical">
-                <Label FontSize="20" Text="{localization:Translate SetViewSortLable}" />
+                    <Label FontSize="20" Text="{x:Static localization:Resource.SetViewSortLable}" />
                 <StackLayout Orientation="Horizontal">
                     <CheckBox
                         IsChecked="{Binding Sort1}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                    <Label Text="{localization:Translate SetViewSortByDateLable}"
+                        <Label Text="{x:Static localization:Resource.SetViewSortByDateLable}"
                            VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
@@ -32,7 +32,7 @@
                         IsChecked="{Binding Sort2}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                    <Label Text="{localization:Translate SetViewSortByNameLable}" 
+                        <Label Text="{x:Static localization:Resource.SetViewSortByNameLable}" 
                            VerticalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
@@ -40,7 +40,7 @@
                         IsChecked="{Binding Sort3}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                    <Label Text="{localization:Translate SetViewSortByNickNameLable}" VerticalOptions="CenterAndExpand" />
+                        <Label Text="{x:Static localization:Resource.SetViewSortByNickNameLable}" VerticalOptions="CenterAndExpand" />
                 </StackLayout>
             </StackLayout>
         </Frame>
@@ -49,13 +49,13 @@
             CornerRadius="20"
                    VerticalOptions="Start">
                 <StackLayout Orientation="Vertical">
-                    <Label FontSize="20" Text="{localization:Translate SetViewLanguageLable}" />
+                    <Label FontSize="20" Text="{x:Static localization:Resource.SetViewLanguageLable}" />
                     <StackLayout Orientation="Horizontal">
                         <CheckBox
                         IsChecked="{Binding EnabledLanguageRus}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                        <Label Text="{localization:Translate SetViewLanguageRusLable}"
+                        <Label Text="{x:Static localization:Resource.SetViewLanguageRusLable}"
                            VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
@@ -63,8 +63,8 @@
                         IsChecked="{Binding EnabledLanguageEN}"
                         VerticalOptions="CenterAndExpand"
                         Color="{StaticResource Check}" />
-                        
-                        <Label Text="{localization:Translate SetViewLanguageEnLable}" 
+
+                        <Label Text="{x:Static localization:Resource.SetViewLanguageEnLable}" 
                            VerticalOptions="CenterAndExpand" />
                     </StackLayout>                   
                 </StackLayout>
