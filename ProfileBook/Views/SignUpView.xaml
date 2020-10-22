@@ -4,15 +4,13 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:localization="clr-namespace:ProfileBook.Translate;assembly=ProfileBook"
+    xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com"
-    Title="{localization:Translate SignUpTitle}"
+    Title="{x:Static localization:Resource.SignUpTitle}"
+    BackgroundColor="{DynamicResource BackGroundPageColor}"
     mc:Ignorable="d">
-    <StackLayout
-        Padding="20"
-        BackgroundColor="White"
-        HorizontalOptions="FillAndExpand">
+    <StackLayout Padding="20" HorizontalOptions="FillAndExpand">
         <StackLayout
             Margin="0,200,0,0"
             HorizontalOptions="FillAndExpand"
@@ -22,19 +20,24 @@
                 FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
-                Placeholder="{localization:Translate SignUpLoginPlace}"
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
+                Placeholder="{x:Static localization:Resource.SignUpLoginPlace}"
                 Text="{Binding Login}"
-                TextColor="Blue" />
+                TextColor="{DynamicResource PrimaryColor}" />
             <Entry
                 x:Name="entryPassword"
                 IsPassword="True"
-                Placeholder="{localization:Translate SignUpPassPlace}"
-                Text="{Binding Password}" />
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
+                Placeholder="{x:Static localization:Resource.SignUpPassPlace}"
+                Text="{Binding Password}"
+                TextColor="{DynamicResource PrimaryColor}"/>
             <Entry
                 x:Name="entryConfirmPas"
                 IsPassword="True"
-                Placeholder="{localization:Translate SignUpConfirmPass}"
-                Text="{Binding Confirm}" />
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
+                Placeholder="{x:Static localization:Resource.SignUpConfirmPass}"
+                Text="{Binding Confirm}" 
+                TextColor="{DynamicResource PrimaryColor}"/>
 
         </StackLayout>
 
@@ -44,12 +47,13 @@
             Orientation="Vertical">
             <Button
                 x:Name="btnSignIn"
-                BackgroundColor="Orange"
+                BackgroundColor="{DynamicResource BtnSignInBackGroundColor}"
                 Command="{Binding CreateUser}"
+                FontSize="26"
                 HorizontalOptions="Fill"
                 IsEnabled="{Binding SignUpIsActiv}"
-                Text="{localization:Translate SignUpButtonSigUp}"
-                TextColor="AliceBlue" />
+                Text="{x:Static localization:Resource.SignUpButtonSigUp}"
+                TextColor="{DynamicResource BtnSignInTextColor}" />
         </StackLayout>
     </StackLayout>
 

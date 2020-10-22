@@ -18,26 +18,23 @@ using ProfileBook.Services.ProfileService;
 using Plugin.Media.Abstractions;
 using Plugin.Media;
 using ProfileBook.Translate;
-using ProfileBook.Localization;
+
 using ProfileBook.Resources;
+using System.Collections.Generic;
+using ProfileBook.Themes;
+using ProfileBook.Helpers;
 
 namespace ProfileBook
 {
     public partial class App : PrismApplication
     {
-        private IAutorization autorization;
-        private IAutorization AutorizationService
-        {
-            get => autorization ?? (autorization = Container.Resolve<IAutorization>());
-        }
-
+      
+        private IAutorization AutorizationService => Container.Resolve<IAutorization>();
+        private ISettingsLoader SettingsLoader => Container.Resolve<ISettingsLoader>();
+      
         public App()
         {
-            InitializeComponent();
-           
-                //Resource.Culture = DependencyService.Get<ILocalize>()
-                //                    .GetCurrentCultureInfo();
-            
+            InitializeComponent();                                     
         }
         public App(IPlatformInitializer initializer = null) : base(initializer)
         {
@@ -46,6 +43,8 @@ namespace ProfileBook
         protected override async void OnInitialized()
         {
             InitializeComponent();
+           
+            LoadSettings();
 
             await InitNavigationAsync();
         }
@@ -60,13 +59,13 @@ namespace ProfileBook
             containerRegistry.RegisterForNavigation<MainListView, MainListViewViewModel>();
             containerRegistry.RegisterForNavigation<AddEditProfileBook, AddEditProfileBookViewModel>();
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewViewModel>();
+
             //Pluggins
             containerRegistry.RegisterInstance<ISettings>(CrossSettings.Current);
             containerRegistry.RegisterInstance<IUserDialogs>(UserDialogs.Instance);
             containerRegistry.RegisterInstance<IMedia>(CrossMedia.Current);
 
-            //Services
-            
+            //Services            
             containerRegistry.Register<IRepository, Repository>();
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
@@ -75,13 +74,23 @@ namespace ProfileBook
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();
             containerRegistry.RegisterInstance<IMarkupExtension>(Container.Resolve<TranslateExtension>());
             containerRegistry.RegisterInstance<ITRanslate>(Container.Resolve<AllertErrorTranslator>());
+            containerRegistry.RegisterInstance<IThemeLoader>(Container.Resolve<ThemaLoader>());
+            containerRegistry.RegisterInstance<ILocalizationLoader>(Container.Resolve<LocalizationLoader>());
+            containerRegistry.RegisterInstance<ISettingsLoader>(Container.Resolve<SettingsLoader>());
         }
+
         #region --Private helpers--
         private async Task InitNavigationAsync()
         {
+          
             if (AutorizationService.Autorizeted())
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             else { await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SignInView)}"); }
+        }
+
+        private void LoadSettings()
+        {
+            SettingsLoader.LoadAppSettings();
         }
         #endregion
     }

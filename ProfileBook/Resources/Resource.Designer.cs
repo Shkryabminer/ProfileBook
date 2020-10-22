@@ -232,6 +232,24 @@ namespace ProfileBook.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark mode On/Off.
+        /// </summary>
+        internal static string SetViewStylLable {
+            get {
+                return ResourceManager.GetString("SetViewStylLable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Styling.
+        /// </summary>
+        internal static string SetViewThemaLable {
+            get {
+                return ResourceManager.GetString("SetViewThemaLable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SETTINGS.
         /// </summary>
         internal static string SetViewTitle {

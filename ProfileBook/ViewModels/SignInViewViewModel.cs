@@ -102,7 +102,7 @@ namespace ProfileBook.ViewModels
         public override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-            Console.WriteLine("Overrided Inintialize signview");
+           
         }
     }
 }

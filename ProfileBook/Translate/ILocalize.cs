@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace ProfileBook.Localization
+namespace ProfileBook.Translate
 {
-   public interface ILocalize
+    public interface ILocalize
     {
         CultureInfo GetCurrentCultureInfo();
     }

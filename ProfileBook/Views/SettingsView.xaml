@@ -3,70 +3,143 @@
     x:Class="ProfileBook.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:prism="http://prismlibrary.com"
     xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
-    Title="{x:Static localization:Resource.SetViewTitle}">
+    xmlns:prism="http://prismlibrary.com"
+    Title="{x:Static localization:Resource.SetViewTitle}"
+    BackgroundColor="{DynamicResource BackGroundPageColor}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Check">Blue</Color>
+            <Style x:Key="CheckBoxLOcked" TargetType="CheckBox">
+                <Style.Triggers>
+                    <Trigger TargetType="CheckBox" Property="IsChecked" Value="True">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView Padding="20" VerticalOptions="Start">
         <StackLayout Orientation="Vertical" Spacing="10">
-            <Frame BorderColor="Blue"
-            CornerRadius="20"
-            VerticalOptions="StartAndExpand">
-                
-            <StackLayout Orientation="Vertical">
-                    <Label FontSize="20" Text="{x:Static localization:Resource.SetViewSortLable}" />
-                <StackLayout Orientation="Horizontal">
-                    <CheckBox
-                        IsChecked="{Binding Sort1}"
-                        VerticalOptions="CenterAndExpand"
-                        Color="{StaticResource Check}" />
-                        <Label Text="{x:Static localization:Resource.SetViewSortByDateLable}"
-                           VerticalOptions="CenterAndExpand" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <CheckBox
-                        IsChecked="{Binding Sort2}"
-                        VerticalOptions="CenterAndExpand"
-                        Color="{StaticResource Check}" />
-                        <Label Text="{x:Static localization:Resource.SetViewSortByNameLable}" 
-                           VerticalOptions="CenterAndExpand" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <CheckBox
-                        IsChecked="{Binding Sort3}"
-                        VerticalOptions="CenterAndExpand"
-                        Color="{StaticResource Check}" />
-                        <Label Text="{x:Static localization:Resource.SetViewSortByNickNameLable}" VerticalOptions="CenterAndExpand" />
-                </StackLayout>
-            </StackLayout>
-        </Frame>
-      
-            <Frame BorderColor="Blue"
-            CornerRadius="20"
-                   VerticalOptions="Start">
+            <Frame
+                BackgroundColor="{DynamicResource BackGroundPageColor}"
+                BorderColor="{DynamicResource PrimaryColor}"
+                CornerRadius="20"
+                VerticalOptions="StartAndExpand">
                 <StackLayout Orientation="Vertical">
-                    <Label FontSize="20" Text="{x:Static localization:Resource.SetViewLanguageLable}" />
+                    <Label
+                        FontSize="20"
+                        Text="{x:Static localization:Resource.SetViewSortLable}"
+                        TextColor="{DynamicResource SecondaryTextColor}" />
                     <StackLayout Orientation="Horizontal">
                         <CheckBox
-                        IsChecked="{Binding EnabledLanguageRus}"
-                        VerticalOptions="CenterAndExpand"
-                        Color="{StaticResource Check}" />
-                        <Label Text="{x:Static localization:Resource.SetViewLanguageRusLable}"
-                           VerticalOptions="CenterAndExpand" />
+                            IsChecked="{Binding Sort1}"
+                            Style="{StaticResource CheckBoxLOcked}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Text="{x:Static localization:Resource.SetViewSortByDateLable}"
+                            TextColor="{DynamicResource SecondaryTextColor}"
+                            VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <CheckBox
-                        IsChecked="{Binding EnabledLanguageEN}"
-                        VerticalOptions="CenterAndExpand"
-                        Color="{StaticResource Check}" />
+                            IsChecked="{Binding Sort2}"
+                            Style="{StaticResource CheckBoxLOcked}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Text="{x:Static localization:Resource.SetViewSortByNameLable}"
+                            TextColor="{DynamicResource SecondaryTextColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox
+                            IsChecked="{Binding Sort3}"
+                            Style="{StaticResource CheckBoxLOcked}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            Text="{x:Static localization:Resource.SetViewSortByNickNameLable}"
+                            TextColor="{DynamicResource SecondaryTextColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
 
-                        <Label Text="{x:Static localization:Resource.SetViewLanguageEnLable}" 
-                           VerticalOptions="CenterAndExpand" />
-                    </StackLayout>                   
+            <Frame
+                BackgroundColor="{DynamicResource BackGroundPageColor}"
+                BorderColor="{DynamicResource PrimaryColor}"
+                CornerRadius="20"
+                VerticalOptions="Start">
+                <StackLayout Orientation="Vertical">
+                    <Label
+                        FontSize="20"
+                        Text="{x:Static localization:Resource.SetViewLanguageLable}"
+                        TextColor="{DynamicResource SecondaryTextColor}" />
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox
+                            IsChecked="{Binding EnabledLanguageRus}"
+                            IsEnabled="False"
+                            Style="{StaticResource CheckBoxLOcked}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            IsEnabled="{Binding EnabledLanguageEN}"
+                            Text="{x:Static localization:Resource.SetViewLanguageRusLable}"
+                            TextColor="{DynamicResource SecondaryTextColor}"
+                            VerticalOptions="CenterAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TranslateCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox
+                            IsChecked="{Binding EnabledLanguageEN}"
+                            IsEnabled="False"
+                            Style="{StaticResource CheckBoxLOcked}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            IsEnabled="{Binding EnabledLanguageRus}"
+                            Text="{x:Static localization:Resource.SetViewLanguageEnLable}"
+                            TextColor="{DynamicResource SecondaryTextColor}"
+                            VerticalOptions="CenterAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TranslateCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <Frame
+                BackgroundColor="{DynamicResource BackGroundPageColor}"
+                BorderColor="{DynamicResource PrimaryColor}"
+                CornerRadius="20"
+                VerticalOptions="Start">
+                <StackLayout Orientation="Vertical">
+                    <Label
+                        FontSize="20"
+                        HorizontalOptions="Start"
+                        Text="{x:Static localization:Resource.SetViewThemaLable}"
+                        TextColor="{DynamicResource SecondaryTextColor}" />
+                    <Grid HorizontalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalOptions="Start"
+                            Text="{x:Static localization:Resource.SetViewStylLable}"
+                            TextColor="{DynamicResource SecondaryTextColor}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Switch
+                            Grid.Column="1"
+                            HorizontalOptions="Start"
+                            IsEnabled="True"
+                            IsToggled="{Binding IsSwitherOn}"
+                            MinimumWidthRequest="50"
+                            OnColor="AliceBlue"
+                            ThumbColor="{DynamicResource PrimaryColor}" />
+                    </Grid>
                 </StackLayout>
             </Frame>
 

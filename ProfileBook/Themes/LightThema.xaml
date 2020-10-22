@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    x:Class="ProfileBook.Themes.LightThema"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Light  Theme  -->
+
+    <!--  General  -->
+    <Color x:Key="BackGroundPageColor">#faf2e3</Color>
+    <Color x:Key="NavigationBarColor">#34a5eb</Color>
+    <Color x:Key="NavigationBarTitleColor">White</Color>
+    <Color x:Key="PrimaryColor">Blue</Color>
+    <Color x:Key="SecondaryColor">White</Color>
+    <Color x:Key="PrimaryTextColor">Blue</Color>
+    <Color x:Key="SecondaryTextColor">#7f8994</Color>
+
+    <!--  SignInPage  -->
+    <Color x:Key="BtnSignInBackGroundColor">Orange</Color>
+    <Color x:Key="BtnSignInTextColor">white</Color>
+    <Color x:Key="LableSignUpTextColor">#2415cf</Color>
+
+    <!--  SignUpPage  -->
+
+    <!--  MainListPage  -->
+    <Color x:Key="LableNoProFileColor">#98a1a6</Color>
+    <Color x:Key="BtnAddColor">Blue</Color>
+    <Color x:Key="BtnAddText">WhiteSmoke</Color>
+    <Color x:Key="BtnAddBorder">Black</Color>
+
+    <!--  EditListPage  -->
+
+    <Color x:Key="SescriptionTextColor">#750914</Color>
+
+
+
+
+    <Color x:Key="TertiaryTextColor">WhiteSmoke</Color>
+    <Color x:Key="TransparentColor">Transparent</Color>
+
+</ResourceDictionary>

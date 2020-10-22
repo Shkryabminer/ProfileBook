@@ -4,9 +4,10 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProfileBook.Converters;assembly=ProfileBook"
-    xmlns:prism="http://prismlibrary.com"
     xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
-    Title="{x:Static localization:Resource.MainListTitle}">
+    xmlns:prism="http://prismlibrary.com"
+    BackgroundColor="{DynamicResource BackGroundPageColor}"
+    Title="{Binding Source={x:Static localization:Resource.MainListTitle}}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsButtonCommand}" Icon="ic_settings.png" />
         <ToolbarItem Command="{Binding LogOutCommand}" Icon="ic_exit_to_app.png" />
@@ -20,12 +21,12 @@
     </ContentPage.Resources>
     <Grid>
         <ListView
-            SeparatorVisibility="None"
             x:Name="profilesListView"
             HasUnevenRows="True"
             ItemsSource="{Binding Path=Profiles}"
             SelectedItem="{Binding SelectedProfile}"
-            SelectionMode="None">
+            SelectionMode="None"
+            SeparatorVisibility="None">
             <ListView.Behaviors />
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -41,7 +42,7 @@
                                 Text="{x:Static localization:Resource.MainListMenuItemDelete}" />
                         </ViewCell.ContextActions>
                         <ViewCell.View>
-                            <StackLayout Orientation="Horizontal" Padding="5,10">
+                            <StackLayout Padding="5,10" Orientation="Horizontal">
 
                                 <ImageButton
                                     Command="{Binding BindingContext.ButtonImageCommand, Source={x:Reference profilesListView}}"
@@ -53,9 +54,11 @@
                                     <Label
                                         FontAttributes="Bold"
                                         Text="{Binding Path=FirstName}"
-                                        TextColor="Blue" />
-                                    <Label Text="{Binding Path=SecondName}" TextColor="blue" />
-                                    <Label Text="{Binding Date, Converter={StaticResource dateConverter}}" TextColor="blue" />
+                                        TextColor="{DynamicResource PrimaryTextColor}" />
+                                    <Label Text="{Binding Path=SecondName}" 
+                                           TextColor="{DynamicResource PrimaryTextColor}" />
+                                    <Label Text="{Binding Date, Converter={StaticResource dateConverter}}" 
+                                           TextColor="{DynamicResource SecondaryTextColor}" />
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell.View>
@@ -64,15 +67,16 @@
             </ListView.ItemTemplate>
         </ListView>
         <Label
-            FontSize="40"
+             FontSize="40"
             HorizontalOptions="Center"
+            TextColor="{DynamicResource SecondaryTextColor}"
             IsVisible="{Binding LabelIsVisible}"
             Text="{x:Static localization:Resource.MainListNoProfAddedLable}"
             VerticalOptions="Center" />
         <Button
             Margin="40"
-            BackgroundColor="Blue"
-            BorderColor="Black"
+            BackgroundColor="{DynamicResource BtnAddColor}"
+            BorderColor="{DynamicResource BtnAddBorder}"
             BorderWidth="5"
             Command="{Binding AddNewProfileCommand}"
             CornerRadius="{StaticResource Key=CornerRadius}"
@@ -81,7 +85,7 @@
             HeightRequest="{StaticResource Key=ButtonSize}"
             HorizontalOptions="End"
             Text="{x:Static localization:Resource.MainListAddProffButton}"
-            TextColor="White"
+            TextColor="{DynamicResource BtnAddText}"
             VerticalOptions="End"
             WidthRequest="{StaticResource Key=ButtonSize}" />
 

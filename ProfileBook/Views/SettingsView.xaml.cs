@@ -7,6 +7,7 @@ namespace ProfileBook.Views
         public SettingsView()
         {
             InitializeComponent();
+            
         }
     }
 }

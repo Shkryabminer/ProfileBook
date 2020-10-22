@@ -11,7 +11,8 @@ using Prism.Ioc;
 using Acr.UserDialogs;
 using Plugin.Media;
 using Xamarin.Forms;
-using ProfileBook.Localization;
+
+using ProfileBook.Translate;
 
 [assembly: Dependency(typeof(ProfileBook.Droid.Localize))]
 namespace ProfileBook.Droid

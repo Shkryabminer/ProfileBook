@@ -8,14 +8,23 @@ using System.Linq;
 using Xamarin.Forms;
 using ProfileBook.Translate;
 using ProfileBook.Resources;
+using System.Runtime.CompilerServices;
+using ProfileBook.Themes;
+using ProfileBook.Views;
+using System.Windows.Input;
 
 namespace ProfileBook.ViewModels
 {
     public class SettingsViewViewModel : BaseViewModel
     {
-        #region --Properties--
+
         private bool _sort1, _sort2, _sort3;
+
         private bool _enabledLanguageRus, _enabledLanguageEn;
+
+        private readonly ISettingsManager _settingsManager;
+
+        #region --Public properties--
         public bool Sort1
         {
             get { return _sort1; }
@@ -40,7 +49,6 @@ namespace ProfileBook.ViewModels
                     Sort1 = false; Sort3 = false;
                     SetSortOption();
                 }
-
             }
         }
         public bool Sort3
@@ -56,38 +64,41 @@ namespace ProfileBook.ViewModels
                 }
             }
         }
-        public bool EnabledLanguageRus {
+        public bool EnabledLanguageRus
+        {
             get { return _enabledLanguageRus; }
-            set {
-                
+            set
+            {
                 SetProperty(ref _enabledLanguageRus, value);
-                if (EnabledLanguageRus)
-                {
-                    EnabledLanguageEN = false;
-                    _settingsManager.LanguageSource = Constants._russian;
-                    Resource.Culture = new System.Globalization.CultureInfo("ru");
-
-                }
             }
         }
         public bool EnabledLanguageEN
         {
             get { return _enabledLanguageEn; }
-            set {               
+            set
+            {
                 SetProperty(ref _enabledLanguageEn, value);
-                if (EnabledLanguageEN)
-                {
-                    EnabledLanguageRus = false;
-                    _settingsManager.LanguageSource = Constants._defaultlanguage;
-                    Resource.Culture = new System.Globalization.CultureInfo("en");
-                    
-                }
             }
         }
+        private bool _isSwitherOn;
+        public bool IsSwitherOn
+        {
+            get
+            {
+                return _settingsManager.ThemaSource == (nameof(Themes.DarkThema));
+            }
+            set
+            {
+                SetProperty(ref _isSwitherOn, value);
+                OnPropertyChanged(nameof(IsSwitherOn));
+            }
 
-        private readonly ISettingsManager _settingsManager;
+        }
+        public ICommand TranslateCommand => new Command(OnTranslateCommand);
+
 
         #endregion
+
         public SettingsViewViewModel(INavigationService navigation, ISettingsManager manager) : base(navigation)
         {
             _settingsManager = manager;
@@ -95,11 +106,35 @@ namespace ProfileBook.ViewModels
             SetSavedLanguageOption();
         }
 
+
+        #region --OnCommandHandlers--
+        private async void OnTranslateCommand(object obj)
+        {
+            SetLanguage();
+            await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}/{nameof(SettingsView)}");
+        }
+
+        #endregion
+
         #region --Overrides--
+        protected override async void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            if (propertyName == nameof(IsSwitherOn))
+            {
+                SetTheme();
+            }
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+        }
+
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
-            SetSavedLanguageOption();
         }
         #endregion
 
@@ -113,7 +148,6 @@ namespace ProfileBook.ViewModels
             else if (Sort2)
             {
                 _settingsManager.SelectedSortMethode = 1;
-
             }
             else if (Sort3)
             {
@@ -131,15 +165,51 @@ namespace ProfileBook.ViewModels
             else if (_settingsManager.SelectedSortMethode == 2)
                 Sort3 = true;
         }
-        
+
         private void SetSavedLanguageOption()
         {
-            if (_settingsManager.LanguageSource == Constants._defaultlanguage)
+            if (_settingsManager.LanguageSource == Constants._english)
             {
                 EnabledLanguageEN = true;
-
+                EnabledLanguageRus = false;
             }
-            else EnabledLanguageRus = true;
+            else
+            {
+                EnabledLanguageRus = true;
+                EnabledLanguageEN = false;
+            }
+        }
+        private void SetLanguage()
+        {
+            if (EnabledLanguageEN)
+            {
+                EnabledLanguageEN = false;
+                EnabledLanguageRus = true;
+                _settingsManager.LanguageSource = Constants._russian;
+                Resource.Culture = new System.Globalization.CultureInfo(_settingsManager.LanguageSource);
+            }
+            else
+            {
+                EnabledLanguageRus = false;
+                EnabledLanguageEN = true;
+                _settingsManager.LanguageSource = Constants._english;
+                Resource.Culture = new System.Globalization.CultureInfo(_settingsManager.LanguageSource);
+            }
+        }
+        private void SetTheme()
+        {
+            ICollection<ResourceDictionary> mergeDictionaries = Application.Current.Resources.MergedDictionaries;
+            mergeDictionaries.Clear();
+            if (_isSwitherOn)
+            {
+                _settingsManager.ThemaSource = (nameof(Themes.DarkThema).ToString());
+                mergeDictionaries.Add(new DarkThema());
+            }
+            else
+            {
+                _settingsManager.ThemaSource = (nameof(Themes.LightThema));
+                mergeDictionaries.Add(new LightThema());
+            }
         }
         #endregion
 

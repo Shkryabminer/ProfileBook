@@ -28,9 +28,15 @@ namespace ProfileBook.Services
         }
         public string LanguageSource
         {
-            get => SetPlugin.GetValueOrDefault(nameof(LanguageSource), Constants._defaultlanguage); 
+            get => SetPlugin.GetValueOrDefault(nameof(LanguageSource), Constants._english); 
             set => SetPlugin.AddOrUpdateValue(nameof(LanguageSource),value);
         }
+        public string ThemaSource
+        {
+            get => SetPlugin.GetValueOrDefault(nameof(ThemaSource),nameof(Themes.LightThema));
+            set => SetPlugin.AddOrUpdateValue(nameof(ThemaSource),value);
+        }
+
 
         #endregion
 

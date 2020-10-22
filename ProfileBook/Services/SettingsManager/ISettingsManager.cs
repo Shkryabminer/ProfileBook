@@ -5,14 +5,14 @@ using System.Text;
 
 namespace ProfileBook.Services
 {
-   public interface ISettingsManager
+    public interface ISettingsManager
     {
-        
 
-       int AutorizatedUserId { get; set; }
-       int SelectedSortMethode { get; set; }
+
+        int AutorizatedUserId { get; set; }
+        int SelectedSortMethode { get; set; }
         string LanguageSource { get; set; }
-        
+        string ThemaSource { get; set; }
 
     }
 }

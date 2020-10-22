@@ -91,11 +91,13 @@ namespace ProfileBook.ViewModels
             _profileService = profileService;            
             _autorizationService = autorization;
         }
+       
         #region --Command handlers--
         private  void SelectProfile(object obj)
         {
             SwapToProfilePage(obj as Profile);
         }
+
         private async void OnButtonImage(object obj)
         {
             var prof = obj as Profile;
@@ -104,6 +106,7 @@ namespace ProfileBook.ViewModels
              _userDialogs.ShowImage(galeryIcon, null,5000);
             
         }
+
         public  void AddNewProfile(object obj)
         {             
             IProfile prof = new Profile(_autorizationService.GetActiveUser());
@@ -140,13 +143,16 @@ namespace ProfileBook.ViewModels
                 _userDialogs.Confirm(config);
             }
         }
+
         private async void OnSettingsButton(object obj)
         {
             await NavigationService.NavigateAsync($"{nameof(SettingsView)}");
         }
+
         public void ShowImage(object sender, SelectedItemChangedEventArgs e)
         {
         }
+
         private async void LogOut(object obj)
         {
             _autorizationService.LogOut();            
@@ -159,17 +165,16 @@ namespace ProfileBook.ViewModels
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {            
         }
+
         public override  void OnNavigatedTo(INavigationParameters parameters)
         {
-
             base.OnNavigatedTo(parameters);
             
             if (_autorizationService.Autorizeted())
             {
                 SetProfiles();                
             }
-           // OnAppearing();
-           
+                     
        }
         #endregion
 

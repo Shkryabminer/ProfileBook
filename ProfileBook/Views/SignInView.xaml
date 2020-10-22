@@ -5,28 +5,35 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    Title="{x:Static localization:Resource.SignInTitle}">
+    Title="{x:Static localization:Resource.SignInTitle}"
+    BackgroundColor="{DynamicResource BackGroundPageColor}">
 
-    <StackLayout
-        Padding="20"
-        BackgroundColor="White"
-        HorizontalOptions="FillAndExpand">
+    <StackLayout Padding="20" HorizontalOptions="FillAndExpand">
         <StackLayout
             Margin="0,200,0,0"
             HorizontalOptions="FillAndExpand"
             Orientation="Vertical"
             Spacing="5">
-            <Entry
+           
+                <Entry
                 FontSize="18"
+                    VerticalOptions="CenterAndExpand"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
                 Placeholder="{x:Static localization:Resource.SignInLoginPlaceHolder}"
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Text="{Binding Login}"
-                TextColor="Blue" />
-            <Entry
+                TextColor="{DynamicResource PrimaryTextColor}" />
+            
+            <Entry                            
                 IsPassword="True"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Start"
+                FontSize="18"
                 Placeholder="{x:Static localization:Resource.SignInPasPlaceHolder}"
-                Text="{Binding Password}" />
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
+                Text="{Binding Password}"
+                TextColor="{DynamicResource PrimaryTextColor}" />
         </StackLayout>
 
         <StackLayout
@@ -36,14 +43,14 @@
 
             <Button
                 x:Name="btnSignIn"
-                BackgroundColor="Orange"
+                BackgroundColor="{DynamicResource BtnSignInBackGroundColor}"
                 Command="{Binding ToMainListViewCommand}"
+                FontSize="18"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding SignInIsActiv}"
                 Text="{x:Static localization:Resource.SignInBtnLogin}"
-                TextColor="AliceBlue"
-                WidthRequest="100" />
-
+                TextColor="{DynamicResource BtnSignInTextColor}"
+                WidthRequest="100"/>
             <Label
                 x:Name="lblSignUp"
                 Padding="0,10,0,0"
@@ -51,7 +58,7 @@
                 HorizontalOptions="CenterAndExpand"
                 HorizontalTextAlignment="Center"
                 Text="{x:Static localization:Resource.SignInLabelSignUp}"
-                TextColor="Blue">
+                TextColor="{DynamicResource LableSignUpTextColor}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ToSignUpViewCommand}" CommandParameter="lblSignUp" />
                 </Label.GestureRecognizers>

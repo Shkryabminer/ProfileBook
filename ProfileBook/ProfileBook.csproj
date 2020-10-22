@@ -27,12 +27,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Themes\DarkTheme_.xaml.cs">
+      <DependentUpon>DarkTheme_.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Themes\_LightTheme.xaml.cs">
+      <DependentUpon>LightTheme.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Themes\_LightTheme.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AddEditProfileBook.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
