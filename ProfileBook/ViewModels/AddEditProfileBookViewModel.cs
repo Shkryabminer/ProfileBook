@@ -19,12 +19,13 @@ namespace ProfileBook.ViewModels
 {
     public class AddEditProfileBookViewModel : BaseViewModel
     {
-        #region --Properties--
         private ITRanslate _allertErrorTranslator;
         private readonly IMedia _mediaPlugin;
         private readonly IUserDialogs _userDialogs;
         private readonly IProfileService _profileService;
-       private Profile _currentProfile;
+        private Profile _currentProfile;
+
+        #region --Public Properties--
         bool _saveIsActive;
         public bool SaveIsActive
         {
@@ -44,6 +45,7 @@ namespace ProfileBook.ViewModels
             get { return _currentProfile; }
         }
         #endregion
+      
         #region Commands
         ICommand _saveProfileCommand;
         public ICommand SaveProfileCommand => _saveProfileCommand ?? (_saveProfileCommand = new Command(SaveProfile));
@@ -52,12 +54,6 @@ namespace ProfileBook.ViewModels
         #endregion
 
 
-      //  public IRepository Repository { get; private set; }
-        //public IProfileRepository ProfilesRepository { get; private set; } _repository
-        //public AddEditProfileBookViewModel(INavigationService navigationServcie, IProfileRepository profilesRepository) : base(navigationServcie)
-        //{
-        //    ProfilesRepository = profilesRepository;
-        //}
         public AddEditProfileBookViewModel(
               INavigationService navigationServcie,
              ITRanslate extension,
@@ -68,9 +64,9 @@ namespace ProfileBook.ViewModels
             _allertErrorTranslator = extension;
             _mediaPlugin = media;
             _userDialogs = userDialogs;
-            _profileService = profileService;
-         ///   Repository = repository;
+            _profileService = profileService;        
         }
+
         #region --Overrides--
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
@@ -102,8 +98,8 @@ namespace ProfileBook.ViewModels
         {
             ActionSheetConfig config = new ActionSheetConfig();
             config.SetUseBottomSheet(true);
-            var galeryIcon = await BitmapLoader.Current.LoadFromResource("ic_collections.png",20f,20f);
-            var photoIcon = await BitmapLoader.Current.LoadFromResource("ic_camera_alt.png", 20f, 20f);
+            var galeryIcon = await BitmapLoader.Current.LoadFromResource("ic_collections.png",500f,500f);
+            var photoIcon = await BitmapLoader.Current.LoadFromResource("ic_camera_alt.png", 500f, 500f);
             config.Add("Take Picture From Galery", SetPictureFromGalery, galeryIcon);
             config.Add("Take Picture From Camera", SetFromCamera, photoIcon);
             config.SetCancel(null, null, null); 
@@ -128,6 +124,9 @@ namespace ProfileBook.ViewModels
             {
                 var options = new StoreCameraMediaOptions();
                 options.SaveToAlbum = true;
+                options.PhotoSize = PhotoSize.Custom;
+                options.CustomPhotoSize = 600;
+
                 MediaFile file = await _mediaPlugin.TakePhotoAsync(options);
                 if (file == null)
                     return;

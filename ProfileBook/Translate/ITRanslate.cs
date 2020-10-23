@@ -8,6 +8,5 @@ namespace ProfileBook.Translate
     {
         string GetTranslate(string key);
         
-
     }
 }

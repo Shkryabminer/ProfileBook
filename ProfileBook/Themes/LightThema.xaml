@@ -33,7 +33,7 @@
     <Color x:Key="SescriptionTextColor">#750914</Color>
 
 
-
+    <Color x:Key="BtnLanguageSetTextColor">Blue</Color>
 
     <Color x:Key="TertiaryTextColor">WhiteSmoke</Color>
     <Color x:Key="TransparentColor">Transparent</Color>

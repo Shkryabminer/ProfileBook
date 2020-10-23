@@ -1,9 +1,4 @@
-﻿using ProfileBook.Services;
-using ProfileBook.Themes;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xamarin.Forms;
+﻿
 
 namespace ProfileBook.Helpers
 {

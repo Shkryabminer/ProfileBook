@@ -1,10 +1,4 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Prism.Navigation;
 using System.Windows.Input;
 using Xamarin.Forms;
 using ProfileBook.Views;
@@ -17,11 +11,16 @@ namespace ProfileBook.ViewModels
 {
     public class SignInViewViewModel : BaseViewModel
     {
-        #region Props
-        string _login;
-        bool _signInIsActive;
-        IAutorization Autorizator { get;  set; }
+        private readonly IAuthentificationService _authentificationService;
+
+        private readonly IAutorization _autorizator;
+
+        private readonly IUserDialogs _userDialogs;
         
+        #region --Public Properties--       
+       
+        bool _signInIsActive;
+
         public bool SignInIsActiv
         {
             get { return !(Login == "" || Password == ""); }
@@ -29,14 +28,32 @@ namespace ProfileBook.ViewModels
             {
                 SetProperty(ref _signInIsActive, value);
             }
-        }        
+        }
+
+        private double _btnLoginHeight=40;
+        public double BtnLoginHeight
+        {
+            get => _btnLoginHeight;
+            set => SetProperty(ref _btnLoginHeight, value);
+        }
+
+        private int _btnLoginCornerRadiuses;
+        public int BtnLoginCornerRadiuses
+        {
+            get => (int)BtnLoginHeight / 2;
+            set => SetProperty(ref _btnLoginCornerRadiuses, value);
+        }
+        string _login;
         public string Login
         {
-            get {
+            get
+            {
                 if (_login == null)
                     _login = "";
                 return _login; }
-            set { SetProperty(ref _login, value);
+            set 
+            { 
+                SetProperty(ref _login, value);
                 RaisePropertyChanged("SignInIsActiv");
             }
         }
@@ -48,47 +65,57 @@ namespace ProfileBook.ViewModels
                 if (_password == null)
                     _password = "";
                 return _password; }
-            set { SetProperty(ref _password, value);
+            set
+            { 
+                SetProperty(ref _password, value);
                 RaisePropertyChanged("SignInIsActiv");
             }
-        }      
+        }
+        #endregion
 
+        #region --Commands--
         private ICommand _toSignUpViewCommand;
         public ICommand ToSignUpViewCommand => _toSignUpViewCommand ?? (_toSignUpViewCommand = new Command(ToSignUpPage));
         private ICommand _toMainListViewCommand;
         public ICommand ToMainListViewCommand => _toMainListViewCommand ?? (_toMainListViewCommand = new Command(SwapToMainView));
-        public IAuthentificationService _AuthentificationService { get; private set; }
         #endregion
-        public SignInViewViewModel(INavigationService navigationServcie, IAuthentificationService authentificationService, IAutorization autorizator) : base(navigationServcie)
+
+        public SignInViewViewModel(INavigationService navigationServcie,
+                                   IAuthentificationService authentificationService,
+                                   IAutorization autorizator,
+                                   IUserDialogs userDialogs)
+                                   : base(navigationServcie)
         {
-            _AuthentificationService = authentificationService;
-            Autorizator = autorizator;
+            _userDialogs = userDialogs;
+            _authentificationService = authentificationService;
+            _autorizator = autorizator;
         }
+
+        #region --OnCommandsHandler--
+       
         public async void ToSignUpPage(object obj)
         {
             await NavigationService.NavigateAsync($"{nameof(SignUpView)}");
         }
+
         public async void SwapToMainView()
         {
             
-            IUser authUser= _AuthentificationService.GetAuthUser(Login, Password);
+            IUser authUser= _authentificationService.GetAuthUser(Login, Password);
             if (authUser != null)
-            {
-                //_autorizationService.SetActiveUser(authUser.ID);
-                Autorizator.SetActiveUser(authUser.ID);
+            {               
+                _autorizator.SetActiveUser(authUser.ID);
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else
-            {
-                //ActionSheetConfig config = new ActionSheetConfig();
-                //config.Add("Неверный пользователь или пароль", () => Password = "", null);
-                //UserDialogs.Instance.ActionSheet(config);
-               
-              UserDialogs.Instance.Alert("Неверный пользователь или пароль");
+            {               
+              _userDialogs.Alert("Неверный пользователь или пароль");
                 Password = "";
             }
-
         }
+        #endregion
+
+        #region --Overrides--
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
@@ -104,5 +131,6 @@ namespace ProfileBook.ViewModels
             base.Initialize(parameters);
            
         }
+        #endregion
     }
 }

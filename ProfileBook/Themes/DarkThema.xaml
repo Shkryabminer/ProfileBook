@@ -37,5 +37,7 @@
 
     <Color x:Key="TertiaryTextColor">WhiteSmoke</Color>
     <Color x:Key="TransparentColor">Transparent</Color>
+
+    <Color x:Key="BtnLanguageSetTextColor">Orange</Color>
 </ResourceDictionary>
 

@@ -124,6 +124,15 @@ namespace ProfileBook.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose language.
+        /// </summary>
+        internal static string EditViewLanguagePeaker {
+            get {
+                return ResourceManager.GetString("EditViewLanguagePeaker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to +.
         /// </summary>
         internal static string MainListAddProffButton {
@@ -165,6 +174,15 @@ namespace ProfileBook.Resources {
         internal static string MainListTitle {
             get {
                 return ResourceManager.GetString("MainListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply changes.
+        /// </summary>
+        internal static string SetingViewLanguageButton {
+            get {
+                return ResourceManager.GetString("SetingViewLanguageButton", resourceCulture);
             }
         }
         

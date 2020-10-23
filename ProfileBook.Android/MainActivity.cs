@@ -36,8 +36,8 @@ namespace ProfileBook.Droid
             ToolbarResource = Resource.Layout.Toolbar;
            
                 UserDialogs.Init(this);
-            
 
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
             base.OnCreate(savedInstanceState);
             await CrossMedia.Current.Initialize();
 

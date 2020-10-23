@@ -6,7 +6,6 @@ using Xamarin.Forms.Xaml;
 using Prism.Ioc;
 using ProfileBook.ViewModels;
 using ProfileBook.Views;
-using ProfileBook.Models;
 using ProfileBook.Services;
 using ProfileBook.Services.Validators;
 using ProfileBook.Services.Autorization;
@@ -18,11 +17,8 @@ using ProfileBook.Services.ProfileService;
 using Plugin.Media.Abstractions;
 using Plugin.Media;
 using ProfileBook.Translate;
-
-using ProfileBook.Resources;
-using System.Collections.Generic;
-using ProfileBook.Themes;
 using ProfileBook.Helpers;
+
 
 namespace ProfileBook
 {
@@ -66,6 +62,7 @@ namespace ProfileBook
             containerRegistry.RegisterInstance<IMedia>(CrossMedia.Current);
 
             //Services            
+            //containerRegistry.RegisterInstance(Container.Resolve<Languages>());
             containerRegistry.Register<IRepository, Repository>();
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IProfileService>(Container.Resolve<ProfileService>());
@@ -73,7 +70,7 @@ namespace ProfileBook
             containerRegistry.Register<IAuthentificationService, AutentificationService>();
             containerRegistry.Register<IPasswordValidator, PasswordValidator>();
             containerRegistry.RegisterInstance<IMarkupExtension>(Container.Resolve<TranslateExtension>());
-            containerRegistry.RegisterInstance<ITRanslate>(Container.Resolve<AllertErrorTranslator>());
+            containerRegistry.RegisterInstance<ITRanslate>(Container.Resolve<AllertMessageTranslator>());
             containerRegistry.RegisterInstance<IThemeLoader>(Container.Resolve<ThemaLoader>());
             containerRegistry.RegisterInstance<ILocalizationLoader>(Container.Resolve<LocalizationLoader>());
             containerRegistry.RegisterInstance<ISettingsLoader>(Container.Resolve<SettingsLoader>());

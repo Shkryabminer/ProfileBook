@@ -10,8 +10,7 @@ namespace ProfileBook.Services
     {
       
         IEnumerable<T> GetItems<T>() where T : IItem, new();
-        //  T GetItem(int id);
-       // void InitTable<T>() where T : IItem, new();
+        
         int DeleteItem<T>(T item) where T : IItem, new();
         int SaveItem<T>(T item) where T : IItem, new();
     }

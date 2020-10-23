@@ -20,24 +20,24 @@
                 FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
-                PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Placeholder="{x:Static localization:Resource.SignUpLoginPlace}"
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Text="{Binding Login}"
                 TextColor="{DynamicResource PrimaryColor}" />
             <Entry
                 x:Name="entryPassword"
                 IsPassword="True"
-                PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Placeholder="{x:Static localization:Resource.SignUpPassPlace}"
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Text="{Binding Password}"
-                TextColor="{DynamicResource PrimaryColor}"/>
+                TextColor="{DynamicResource PrimaryColor}" />
             <Entry
                 x:Name="entryConfirmPas"
                 IsPassword="True"
-                PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Placeholder="{x:Static localization:Resource.SignUpConfirmPass}"
-                Text="{Binding Confirm}" 
-                TextColor="{DynamicResource PrimaryColor}"/>
+                PlaceholderColor="{DynamicResource SecondaryTextColor}"
+                Text="{Binding Confirm}"
+                TextColor="{DynamicResource PrimaryColor}" />
 
         </StackLayout>
 

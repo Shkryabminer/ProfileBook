@@ -15,20 +15,21 @@
             IconImageSource="ic_save.png" />
     </ContentPage.ToolbarItems>
     <ScrollView>
-        <StackLayout
-            Padding="20"
-            HorizontalOptions="FillAndExpand">
+        <StackLayout Padding="20" HorizontalOptions="FillAndExpand">
             <StackLayout
                 Margin="0,20,0,0"
                 HorizontalOptions="FillAndExpand"
                 Orientation="Vertical"
                 Spacing="5">
-                <Frame Margin="0,0,0,30"
-                       BorderColor="{DynamicResource PrimaryColor}">
+                <Frame
+                    BackgroundColor="{DynamicResource BackGroundPageColor}"
+                    HeightRequest="150"
+                    HorizontalOptions="Center"
+                    WidthRequest="200">
                     <Image
-                        HeightRequest="150"
+                        HorizontalOptions="FillAndExpand"
                         Source="{Binding CurrentProfile.Picture, Mode=TwoWay}"
-                        WidthRequest="150">
+                        VerticalOptions="FillAndExpand">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ImageTapCommand}" />
                         </Image.GestureRecognizers>
@@ -44,8 +45,8 @@
                     FontSize="18"
                     HorizontalOptions="Fill"
                     HorizontalTextAlignment="Start"
-                    PlaceholderColor="{DynamicResource SecondaryTextColor}"
                     Placeholder="{x:Static localization:Resource.EditListNickPlace}"
+                    PlaceholderColor="{DynamicResource SecondaryTextColor}"
                     Text="{Binding CurrentProfile.FirstName}"
                     TextColor="{DynamicResource PrimaryTextColor}" />
                 <Label
@@ -55,8 +56,8 @@
                     TextColor="{DynamicResource SecondaryTextColor}" />
                 <Entry
                     x:Name="entrySecond"
-                    PlaceholderColor="{DynamicResource SecondaryTextColor}"
                     Placeholder="{x:Static localization:Resource.EditListNamePplace}"
+                    PlaceholderColor="{DynamicResource SecondaryTextColor}"
                     Text="{Binding CurrentProfile.SecondName}"
                     TextColor="{DynamicResource PrimaryTextColor}" />
             </StackLayout>

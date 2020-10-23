@@ -14,22 +14,22 @@
             HorizontalOptions="FillAndExpand"
             Orientation="Vertical"
             Spacing="5">
-           
-                <Entry
+
+            <Entry
                 FontSize="18"
-                    VerticalOptions="CenterAndExpand"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
                 Placeholder="{x:Static localization:Resource.SignInLoginPlaceHolder}"
                 PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Text="{Binding Login}"
-                TextColor="{DynamicResource PrimaryTextColor}" />
-            
-            <Entry                            
-                IsPassword="True"
+                TextColor="{DynamicResource PrimaryTextColor}"
+                VerticalOptions="CenterAndExpand" />
+
+            <Entry
+                FontSize="18"
                 HorizontalOptions="Fill"
                 HorizontalTextAlignment="Start"
-                FontSize="18"
+                IsPassword="True"
                 Placeholder="{x:Static localization:Resource.SignInPasPlaceHolder}"
                 PlaceholderColor="{DynamicResource SecondaryTextColor}"
                 Text="{Binding Password}"
@@ -45,12 +45,14 @@
                 x:Name="btnSignIn"
                 BackgroundColor="{DynamicResource BtnSignInBackGroundColor}"
                 Command="{Binding ToMainListViewCommand}"
+                CornerRadius="{Binding BtnLoginCornerRadiuses}"
                 FontSize="18"
+                HeightRequest="{Binding BtnLoginHeight}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding SignInIsActiv}"
                 Text="{x:Static localization:Resource.SignInBtnLogin}"
                 TextColor="{DynamicResource BtnSignInTextColor}"
-                WidthRequest="100"/>
+                WidthRequest="100" />
             <Label
                 x:Name="lblSignUp"
                 Padding="0,10,0,0"

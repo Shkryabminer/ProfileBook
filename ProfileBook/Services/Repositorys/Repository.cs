@@ -30,9 +30,7 @@ namespace ProfileBook.Services
         {           
             _dataBase = new SQLiteConnection(DataPath);
             _dataBase.CreateTable<User>();
-            _dataBase.CreateTable<Profile>();
-         //   InitTable<User>();
-         //   InitTable<Profile>();
+            _dataBase.CreateTable<Profile>();         
         }
         #region --Implement Irepository--
         public int DeleteItem<T>(T item) where T : IItem, new()

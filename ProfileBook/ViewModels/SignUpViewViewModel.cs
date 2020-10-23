@@ -1,7 +1,4 @@
 ﻿using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using ProfileBook.Services;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -14,10 +11,13 @@ namespace ProfileBook.ViewModels
 {
     public class SignUpViewViewModel : BaseViewModel
     {
-        #region Properties
-        string _login;
+        private readonly IPasswordValidator _passwordValidator;
+        private readonly IRepository Repository;
+        private readonly IUserDialogs _userDialogs;
+     
+        #region Public Properties
+       
         bool _signInUpActive;
-        
         public bool SignUpIsActiv
         {
             get { return !(Login == "" || Password == ""|| Confirm =="" ||Login==null||Password==null||Confirm==null); }
@@ -26,6 +26,8 @@ namespace ProfileBook.ViewModels
                 SetProperty(ref _signInUpActive, value);
             }
         }
+
+        private string _login;
         public string Login
         {
             get { return _login; }
@@ -52,24 +54,22 @@ namespace ProfileBook.ViewModels
         ICommand _createUser;
         public ICommand CreateUser => _createUser ?? (_createUser = new Command(AddUser));
         #endregion
-        public IRepository Repository { get; private set; }
-        //public IUserRepository UsersRepository { get; private set; } _repository
-        public IPasswordValidator SignUpValidator { get; private set; }
-        //public SignUpViewViewModel(INavigationService navigationService, IUserRepository usersRepository, IPasswordValidator signUpValidator) : base(navigationService)
-        //{
-        //    UsersRepository = usersRepository;//_repository
-        //    SignUpValidator = signUpValidator;
-        //}
-        public SignUpViewViewModel(INavigationService navigationService, IRepository repository, IPasswordValidator signUpValidator) : base(navigationService)
+
+
+        public SignUpViewViewModel(INavigationService navigationService,
+                                   IRepository repository,
+                                   IPasswordValidator signUpValidator,
+                                   IUserDialogs userDialogs) 
+                                   : base(navigationService)
         {
-            Repository = repository;
-            //UsersRepository = usersRepository;//_repository
-            SignUpValidator = signUpValidator;
+            Repository = repository;            
+            _passwordValidator = signUpValidator;
+            _userDialogs = userDialogs;
         }
+        #region --OnCommandHandlers--
         public async void AddUser()
-        {
-            // string message = SignUpValidator.IsValid(Login, Password, Confirm, UsersRepository.GetUsers());_repository
-            string message = SignUpValidator.IsValid(Login, Password, Confirm, Repository.GetItems<User>());
+        {            
+            string message = _passwordValidator.IsValid(Login, Password, Confirm, Repository.GetItems<User>());
             if (message == "Valid")
             {
                 var navParam = new NavigationParameters();
@@ -77,9 +77,9 @@ namespace ProfileBook.ViewModels
                 Repository.SaveItem(new User(Login, Password));
                 await NavigationService.NavigateAsync($"/{nameof(SignInView)}",navParam);
             }
-            else UserDialogs.Instance.Alert(message, "Ok");
+            else _userDialogs.Alert(message, "Ok");
         }
-
+        #endregion
 
 
     }

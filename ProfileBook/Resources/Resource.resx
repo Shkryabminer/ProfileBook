@@ -138,6 +138,9 @@
   <data name="EditPrifileError" xml:space="preserve">
     <value>Name and NickName must be fiiled</value>
   </data>
+  <data name="EditViewLanguagePeaker" xml:space="preserve">
+    <value>Choose language</value>
+  </data>
   <data name="MainListAddProffButton" xml:space="preserve">
     <value>+</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="MainListTitle" xml:space="preserve">
     <value>PROFILES</value>
+  </data>
+  <data name="SetingViewLanguageButton" xml:space="preserve">
+    <value>Apply changes</value>
   </data>
   <data name="SetViewLanguageEnLable" xml:space="preserve">
     <value>English</value>

@@ -10,7 +10,10 @@
     mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary Source="Themes/LightThema.xaml" />
-         
+        <x:Array Type="{x:Type x:String}" x:Key="languages">
+            <x:String>english</x:String>
+            <x:String>русский</x:String>
+        </x:Array>
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor" Value="{DynamicResource NavigationBarColor}" />
             <Setter Property="BarTextColor" Value="{DynamicResource NavigationBarTitleColor}" />

@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using Prism;
 using Prism.Ioc;
-using ProfileBook.Localization;
+using ProfileBook.Translate;
 using UIKit;
 using Xamarin.Forms;
 
@@ -52,6 +52,7 @@ namespace ProfileBook.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             LoadApplication(new App(new IOSInitializer()));
 
             return base.FinishedLaunching(app, options);

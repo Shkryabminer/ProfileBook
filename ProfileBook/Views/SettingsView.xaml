@@ -3,6 +3,9 @@
     x:Class="ProfileBook.Views.SettingsView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:enums="clr-namespace:ProfileBook.Enums;assembly=ProfileBook"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:local="clr-namespace:ProfileBook.Controls;assembly=ProfileBook"
     xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
     Title="{x:Static localization:Resource.SetViewTitle}"
@@ -17,6 +20,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView Padding="20" VerticalOptions="Start">
@@ -30,7 +34,7 @@
                     <Label
                         FontSize="20"
                         Text="{x:Static localization:Resource.SetViewSortLable}"
-                        TextColor="{DynamicResource SecondaryTextColor}" />
+                        TextColor="{DynamicResource PrimaryTextColor}" />
                     <StackLayout Orientation="Horizontal">
                         <CheckBox
                             IsChecked="{Binding Sort1}"
@@ -38,7 +42,7 @@
                             VerticalOptions="CenterAndExpand" />
                         <Label
                             Text="{x:Static localization:Resource.SetViewSortByDateLable}"
-                            TextColor="{DynamicResource SecondaryTextColor}"
+                            TextColor="{DynamicResource PrimaryTextColor}"
                             VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
@@ -48,7 +52,7 @@
                             VerticalOptions="CenterAndExpand" />
                         <Label
                             Text="{x:Static localization:Resource.SetViewSortByNameLable}"
-                            TextColor="{DynamicResource SecondaryTextColor}"
+                            TextColor="{DynamicResource PrimaryTextColor}"
                             VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
@@ -58,7 +62,7 @@
                             VerticalOptions="CenterAndExpand" />
                         <Label
                             Text="{x:Static localization:Resource.SetViewSortByNickNameLable}"
-                            TextColor="{DynamicResource SecondaryTextColor}"
+                            TextColor="{DynamicResource PrimaryTextColor}"
                             VerticalOptions="CenterAndExpand" />
                     </StackLayout>
                 </StackLayout>
@@ -73,40 +77,25 @@
                     <Label
                         FontSize="20"
                         Text="{x:Static localization:Resource.SetViewLanguageLable}"
-                        TextColor="{DynamicResource SecondaryTextColor}" />
-                    <StackLayout Orientation="Horizontal">
-                        <CheckBox
-                            IsChecked="{Binding EnabledLanguageRus}"
-                            IsEnabled="False"
-                            Style="{StaticResource CheckBoxLOcked}"
-                            VerticalOptions="CenterAndExpand" />
-                        <Label
-                            IsEnabled="{Binding EnabledLanguageEN}"
-                            Text="{x:Static localization:Resource.SetViewLanguageRusLable}"
-                            TextColor="{DynamicResource SecondaryTextColor}"
-                            VerticalOptions="CenterAndExpand">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TranslateCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <CheckBox
-                            IsChecked="{Binding EnabledLanguageEN}"
-                            IsEnabled="False"
-                            Style="{StaticResource CheckBoxLOcked}"
-                            VerticalOptions="CenterAndExpand" />
-                        <Label
-                            IsEnabled="{Binding EnabledLanguageRus}"
-                            Text="{x:Static localization:Resource.SetViewLanguageEnLable}"
-                            TextColor="{DynamicResource SecondaryTextColor}"
-                            VerticalOptions="CenterAndExpand">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding TranslateCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
+                        TextColor="{DynamicResource PrimaryTextColor}" />
+                    <Picker
+                        Title="{x:Static localization:Resource.EditViewLanguagePeaker}"
+                        ios:Picker.UpdateMode="WhenFinished"
+                        ItemsSource="{x:StaticResource Key=languages}"
+                        SelectedItem="{Binding Language}"
+                        TextColor="{DynamicResource PrimaryTextColor}"
+                        TitleColor="{DynamicResource PrimaryTextColor}"
+                        WidthRequest="100" />
 
-                    </StackLayout>
+                    <Button
+                        BackgroundColor="{DynamicResource BackGroundPageColor}"
+                        BorderColor="{DynamicResource PrimaryTextColor}"
+                        BorderWidth="2"
+                        Command="{Binding TranslateCommand}"
+                        CornerRadius="10"
+                        Text="{x:Static localization:Resource.SetingViewLanguageButton}"
+                        TextColor="{DynamicResource BtnLanguageSetTextColor}" />
+
                 </StackLayout>
             </Frame>
             <Frame
@@ -119,7 +108,7 @@
                         FontSize="20"
                         HorizontalOptions="Start"
                         Text="{x:Static localization:Resource.SetViewThemaLable}"
-                        TextColor="{DynamicResource SecondaryTextColor}" />
+                        TextColor="{DynamicResource PrimaryTextColor}" />
                     <Grid HorizontalOptions="CenterAndExpand">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
@@ -129,7 +118,7 @@
                             Grid.Column="0"
                             HorizontalOptions="Start"
                             Text="{x:Static localization:Resource.SetViewStylLable}"
-                            TextColor="{DynamicResource SecondaryTextColor}"
+                            TextColor="{DynamicResource PrimaryTextColor}"
                             VerticalOptions="CenterAndExpand" />
                         <Switch
                             Grid.Column="1"

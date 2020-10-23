@@ -3,11 +3,12 @@
     x:Class="ProfileBook.Views.MainListView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     xmlns:local="clr-namespace:ProfileBook.Converters;assembly=ProfileBook"
     xmlns:localization="clr-namespace:ProfileBook.Resources;assembly=ProfileBook"
     xmlns:prism="http://prismlibrary.com"
-    BackgroundColor="{DynamicResource BackGroundPageColor}"
-    Title="{Binding Source={x:Static localization:Resource.MainListTitle}}">
+    Title="{Binding Source={x:Static localization:Resource.MainListTitle}}"
+    BackgroundColor="{DynamicResource BackGroundPageColor}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding SettingsButtonCommand}" Icon="ic_settings.png" />
         <ToolbarItem Command="{Binding LogOutCommand}" Icon="ic_exit_to_app.png" />
@@ -24,7 +25,6 @@
             x:Name="profilesListView"
             HasUnevenRows="True"
             ItemsSource="{Binding Path=Profiles}"
-            SelectedItem="{Binding SelectedProfile}"
             SelectionMode="None"
             SeparatorVisibility="None">
             <ListView.Behaviors />
@@ -42,36 +42,42 @@
                                 Text="{x:Static localization:Resource.MainListMenuItemDelete}" />
                         </ViewCell.ContextActions>
                         <ViewCell.View>
-                            <StackLayout Padding="5,10" Orientation="Horizontal">
+                            <Grid Padding="5,10" HeightRequest="60">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="3*" />
+                                </Grid.ColumnDefinitions>
 
-                                <ImageButton
-                                    Command="{Binding BindingContext.ButtonImageCommand, Source={x:Reference profilesListView}}"
-                                    CommandParameter="{Binding .}"
-                                    HeightRequest="40"
+                                <ffimageloading:CachedImage
+                                    Grid.Column="0"
+                                    Aspect="AspectFit"
+                                    DownsampleHeight="200"
+                                    DownsampleToViewSize="true"
+                                    DownsampleWidth="200"
+                                    HeightRequest="80"
+                                    HorizontalOptions="Center"
                                     Source="{Binding Picture}"
-                                    WidthRequest="100" />
-                                <StackLayout Orientation="Vertical">
+                                    VerticalOptions="Center" />
+                                <StackLayout Grid.Column="1" Orientation="Vertical">
                                     <Label
                                         FontAttributes="Bold"
                                         Text="{Binding Path=FirstName}"
                                         TextColor="{DynamicResource PrimaryTextColor}" />
-                                    <Label Text="{Binding Path=SecondName}" 
-                                           TextColor="{DynamicResource PrimaryTextColor}" />
-                                    <Label Text="{Binding Date, Converter={StaticResource dateConverter}}" 
-                                           TextColor="{DynamicResource SecondaryTextColor}" />
+                                    <Label Text="{Binding Path=SecondName}" TextColor="{DynamicResource PrimaryTextColor}" />
+                                    <Label Text="{Binding Date, Converter={StaticResource dateConverter}}" TextColor="{DynamicResource SecondaryTextColor}" />
                                 </StackLayout>
-                            </StackLayout>
+                            </Grid>
                         </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <Label
-             FontSize="40"
+            FontSize="40"
             HorizontalOptions="Center"
-            TextColor="{DynamicResource SecondaryTextColor}"
             IsVisible="{Binding LabelIsVisible}"
             Text="{x:Static localization:Resource.MainListNoProfAddedLable}"
+            TextColor="{DynamicResource SecondaryTextColor}"
             VerticalOptions="Center" />
         <Button
             Margin="40"
