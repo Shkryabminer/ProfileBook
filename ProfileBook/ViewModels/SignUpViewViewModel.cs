@@ -6,6 +6,7 @@ using ProfileBook.Models;
 using ProfileBook.Views;
 using ProfileBook.Services.Validators;
 using Acr.UserDialogs;
+using ProfileBook.Translate;
 
 namespace ProfileBook.ViewModels
 {
@@ -14,6 +15,7 @@ namespace ProfileBook.ViewModels
         private readonly IPasswordValidator _passwordValidator;
         private readonly IRepository Repository;
         private readonly IUserDialogs _userDialogs;
+        private readonly ITRanslate _translator;
      
         #region Public Properties
        
@@ -55,13 +57,14 @@ namespace ProfileBook.ViewModels
         public ICommand CreateUser => _createUser ?? (_createUser = new Command(AddUser));
         #endregion
 
-
         public SignUpViewViewModel(INavigationService navigationService,
                                    IRepository repository,
                                    IPasswordValidator signUpValidator,
+                                   ITRanslate translator,
                                    IUserDialogs userDialogs) 
                                    : base(navigationService)
         {
+            _translator = translator;
             Repository = repository;            
             _passwordValidator = signUpValidator;
             _userDialogs = userDialogs;
@@ -70,14 +73,19 @@ namespace ProfileBook.ViewModels
         public async void AddUser()
         {            
             string message = _passwordValidator.IsValid(Login, Password, Confirm, Repository.GetItems<User>());
+           
             if (message == "Valid")
             {
                 var navParam = new NavigationParameters();
                 navParam.Add("Login", Login);
                 Repository.SaveItem(new User(Login, Password));
-                await NavigationService.NavigateAsync($"/{nameof(SignInView)}",navParam);
+                await NavigationService.NavigateAsync($"/{nameof(SignInView)}", navParam);
             }
-            else _userDialogs.Alert(message, "Ok");
+            else
+            { 
+              string  error = _translator.GetTranslate(message);
+                _userDialogs.Alert(error, "Ok");                
+            }
         }
         #endregion
 

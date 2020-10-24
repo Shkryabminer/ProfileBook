@@ -9,6 +9,7 @@ namespace ProfileBook
     {
         public const string _english = "en";
         public const string _russian = "ru";
-      
+        public const string _resource = "ProfileBook.Resources.Resource";
+           
     }
 }

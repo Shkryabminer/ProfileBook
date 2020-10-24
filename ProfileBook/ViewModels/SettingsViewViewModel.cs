@@ -118,8 +118,7 @@ namespace ProfileBook.ViewModels
 
         #region --OnCommandHandlers--
         private async void OnTranslateCommand(object obj)
-        {
-            
+        {            
             SetFromPicker();
             await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}/{nameof(SettingsView)}");
         }

@@ -5,17 +5,16 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Globalization;
 using ProfileBook.Services;
-
-
+using ProfileBook.Resources;
 
 namespace ProfileBook.Translate
 {
     [ContentProperty("Text")]    
     public class TranslateExtension : IMarkupExtension
     {
-        public static string ResourceId { get; set; }
+        
         private readonly CultureInfo ci;
-        private static  ISettingsManager _settingsManger;
+        
 
         #region --Public properties--
         public string Text { get; set; }
@@ -23,12 +22,9 @@ namespace ProfileBook.Translate
 
         public TranslateExtension()
         {
-          ci = new CultureInfo(1033);
+          ci = Resource.Culture;
         }
-        public TranslateExtension(ISettingsManager manager):this()
-        {
-            _settingsManger = manager;           
-        }
+       
 
         #region --Implementation IMarkUpExtension--
         public object ProvideValue(IServiceProvider serviceProvider)
@@ -37,8 +33,7 @@ namespace ProfileBook.Translate
             if (Text == null)
                 return "";
 
-            ResourceManager resmgr = new ResourceManager(_settingsManger.LanguageSource,
-                        typeof(TranslateExtension).GetTypeInfo().Assembly);
+            ResourceManager resmgr = GetResourceManager();
 
             var translation = resmgr.GetString(Text, ci);
 
@@ -49,4 +44,16 @@ namespace ProfileBook.Translate
             return translation;
         }
         #endregion
-    }}
+
+        #region --Private helpers--
+        private ResourceManager GetResourceManager()
+        {
+
+
+            string resource = Constants._resource;
+
+            return new ResourceManager(resource, typeof(TranslateExtension).GetTypeInfo().Assembly);
+        }
+        #endregion
+    }
+}

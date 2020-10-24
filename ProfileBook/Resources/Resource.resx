@@ -141,6 +141,24 @@
   <data name="EditViewLanguagePeaker" xml:space="preserve">
     <value>Choose language</value>
   </data>
+  <data name="IncorrectLoginLegrth" xml:space="preserve">
+    <value>Login have to be min 4 signs and less then 16</value>
+  </data>
+  <data name="IncorrectLoginOrPassw" xml:space="preserve">
+    <value>Incorrect Login or Password</value>
+  </data>
+  <data name="IncorrectPasswordLength" xml:space="preserve">
+    <value>Password have to be min 8 signs and less then 16</value>
+  </data>
+  <data name="LoginIsAlreadyTaken" xml:space="preserve">
+    <value>This login is already taken</value>
+  </data>
+  <data name="LoginPasswordContainSpace" xml:space="preserve">
+    <value>Login or password could't contain spaces</value>
+  </data>
+  <data name="LoginStartFromNumber" xml:space="preserve">
+    <value>Login have not start from number</value>
+  </data>
   <data name="MainListAddProffButton" xml:space="preserve">
     <value>+</value>
   </data>
@@ -155,6 +173,15 @@
   </data>
   <data name="MainListTitle" xml:space="preserve">
     <value>PROFILES</value>
+  </data>
+  <data name="PassConfirmMis" xml:space="preserve">
+    <value>Password and Confirm missmatch</value>
+  </data>
+  <data name="PassNotContainLet" xml:space="preserve">
+    <value>Password has contain at leest 1 letter</value>
+  </data>
+  <data name="PassNotContainUp" xml:space="preserve">
+    <value>Password has contain at leest 1 Upper</value>
   </data>
   <data name="SetingViewLanguageButton" xml:space="preserve">
     <value>Apply changes</value>

@@ -6,6 +6,7 @@ using ProfileBook.Services;
 using ProfileBook.Models;
 using Acr.UserDialogs;
 using ProfileBook.Services.Autorization;
+using ProfileBook.Translate;
 
 namespace ProfileBook.ViewModels
 {
@@ -14,7 +15,7 @@ namespace ProfileBook.ViewModels
         private readonly IAuthentificationService _authentificationService;
 
         private readonly IAutorization _autorizator;
-
+        private readonly ITRanslate _translator;
         private readonly IUserDialogs _userDialogs;
         
         #region --Public Properties--       
@@ -83,15 +84,17 @@ namespace ProfileBook.ViewModels
         public SignInViewViewModel(INavigationService navigationServcie,
                                    IAuthentificationService authentificationService,
                                    IAutorization autorizator,
+                                   ITRanslate translator,
                                    IUserDialogs userDialogs)
                                    : base(navigationServcie)
         {
+            _translator = translator;
             _userDialogs = userDialogs;
             _authentificationService = authentificationService;
             _autorizator = autorizator;
         }
 
-        #region --OnCommandsHandler--
+            #region --OnCommandsHandler--
        
         public async void ToSignUpPage(object obj)
         {
@@ -108,8 +111,9 @@ namespace ProfileBook.ViewModels
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(MainListView)}");
             }
             else
-            {               
-              _userDialogs.Alert("Неверный пользователь или пароль");
+            {
+                string mes = _translator.GetTranslate("IncorrectLoginOrPassw");
+              _userDialogs.Alert(mes);
                 Password = "";
             }
         }

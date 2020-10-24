@@ -133,6 +133,60 @@ namespace ProfileBook.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login have to be min 4 signs and less then 16.
+        /// </summary>
+        internal static string IncorrectLoginLegrth {
+            get {
+                return ResourceManager.GetString("IncorrectLoginLegrth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect Login or Password.
+        /// </summary>
+        internal static string IncorrectLoginOrPassw {
+            get {
+                return ResourceManager.GetString("IncorrectLoginOrPassw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password have to be min 8 signs and less then 16.
+        /// </summary>
+        internal static string IncorrectPasswordLength {
+            get {
+                return ResourceManager.GetString("IncorrectPasswordLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This login is already taken.
+        /// </summary>
+        internal static string LoginIsAlreadyTaken {
+            get {
+                return ResourceManager.GetString("LoginIsAlreadyTaken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login or password could&apos;t contain spaces.
+        /// </summary>
+        internal static string LoginPasswordContainSpace {
+            get {
+                return ResourceManager.GetString("LoginPasswordContainSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login have not start from number.
+        /// </summary>
+        internal static string LoginStartFromNumber {
+            get {
+                return ResourceManager.GetString("LoginStartFromNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to +.
         /// </summary>
         internal static string MainListAddProffButton {
@@ -174,6 +228,33 @@ namespace ProfileBook.Resources {
         internal static string MainListTitle {
             get {
                 return ResourceManager.GetString("MainListTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password and Confirm missmatch.
+        /// </summary>
+        internal static string PassConfirmMis {
+            get {
+                return ResourceManager.GetString("PassConfirmMis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password has contain at leest 1 letter.
+        /// </summary>
+        internal static string PassNotContainLet {
+            get {
+                return ResourceManager.GetString("PassNotContainLet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password has contain at leest 1 Upper.
+        /// </summary>
+        internal static string PassNotContainUp {
+            get {
+                return ResourceManager.GetString("PassNotContainUp", resourceCulture);
             }
         }
         
